@@ -30,6 +30,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" style="margin-right: 5px;" href="#" data-toggle="dropdown">Administration <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Employee" asp-action="GetAll">List Of Employees</a></li>
+                                @if (User.IsInRole("administrator"))
+                                {
+                                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Register Employee</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>

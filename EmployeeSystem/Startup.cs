@@ -13,6 +13,8 @@ using EmployeeSystem.Models;
 using EmployeeSystem.Services;
 using DatLayer.Interfaces;
 using DatLayer;
+using ServiceLayer.Interfaces;
+using ServiceLayer.Services;
 
 namespace EmployeeSystem
 {
@@ -45,6 +47,7 @@ namespace EmployeeSystem
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IEmployeeService, EmployeeService>();
 
             services.AddMvc();
         }
