@@ -1,4 +1,5 @@
-﻿using EmployeeSystem.Models;
+﻿using DbEntities.Models;
+using EmployeeSystem.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ namespace EmployeeSystem.Data
             : base(options)
         {
         }
+
+        public DbSet<EmployeeUser> EmployeeUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
