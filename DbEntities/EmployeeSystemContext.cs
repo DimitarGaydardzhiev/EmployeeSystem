@@ -13,6 +13,14 @@ namespace EmployeeSystem.Data
         }
 
         public DbSet<EmployeeUser> EmployeeUsers { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<RequestType> RequestTypes { get; set; }
+        public DbSet<Request> Request { get; set; }
+        public DbSet<EmployeeUserProject> EmployeeUserProjects { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<EmployeePosition> EmployeePositions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
