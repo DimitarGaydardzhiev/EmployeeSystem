@@ -35,17 +35,30 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" style="margin-right: 5px;" href="#" data-toggle="dropdown">Administration <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Employee" asp-action="GetAll">List Of Employees</a></li>
+                                <li class="p-2"><a asp-area="" asp-controller="Employee" asp-action="GetAll">List Of Employees</a></li>
                                 @if (User.IsInRole("administrator"))
                                 {
-                                    <li><a asp-area="" asp-controller="Account" asp-action="Register">Register Employee</a></li>
+                                    <li class="p-2"><a asp-area="" asp-controller="Account" asp-action="Register">Register Employee</a></li>
+                                }
+                                <li class="p-2"><a asp-area="" asp-controller="Department" asp-action="GetAll">Departments</a></li>
+                                <li class="p-2"><a asp-area="" asp-controller="Position" asp-action="GetAll">Company Positions</a></li>
+                            </ul>
+                        </li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" style="margin-right: 5px;" href="#" data-toggle="dropdown">Requests <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="GetAll">My Requests</a></li>
+                                <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="GetAll">New Requests</a></li>
+                                @if (User.IsInRole("administrator"))
+                                {
+                                    <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="GetAll">Pending Requests</a></li>
                                 }
                             </ul>
                         </li>
                     }
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

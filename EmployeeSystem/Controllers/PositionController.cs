@@ -6,18 +6,18 @@ namespace EmployeeSystem.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class EmployeeController : Controller
+    public class PositionController : Controller
     {
-        private readonly IEmployeeService service;
+        private readonly IPositionService service;
 
-        public EmployeeController(IEmployeeService service)
+        public PositionController(IPositionService service)
         {
             this.service = service;
         }
 
         public IActionResult GetAll()
         {
-            var employees = service.GetAll();
+            var positions = service.GetAll();
             return View();
         }
     }

@@ -14,6 +14,8 @@ namespace DbEntities.Models
         [Required]
         public DateTime To { get; set; }
 
+        public bool IsApproved { get; set; }
+
         public int RequestTypeId { get; set; }
 
         public int EmployeeUserId { get; set; }

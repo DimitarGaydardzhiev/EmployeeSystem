@@ -33,3 +33,11 @@
         display: none;
     }
 }
+
+.p-1 {
+    padding: 0.25rem !important;
+}
+
+.p-2 {
+    padding: 0.50rem !important;
+}
