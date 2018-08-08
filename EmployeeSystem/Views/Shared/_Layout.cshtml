@@ -38,7 +38,7 @@
                                 <li class="p-2"><a asp-area="" asp-controller="Employee" asp-action="All">List Of Employees</a></li>
                                 @if (User.IsInRole("administrator"))
                                 {
-                                    <li class="p-2"><a asp-area="" asp-controller="Account" asp-action="Register">Register Employee</a></li>
+                                    <li class="p-2"><a asp-area="" asp-controller="Employee" asp-action="Add">Add Employee</a></li>
                                 }
                                 <li class="p-2"><a asp-area="" asp-controller="Department" asp-action="GetAll">Departments</a></li>
                                 <li class="p-2"><a asp-area="" asp-controller="Position" asp-action="All">Company Positions</a></li>

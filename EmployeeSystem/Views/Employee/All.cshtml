@@ -15,10 +15,10 @@
             </tr>
             @foreach (var employee in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => employee.Name)</td>
-                    <td></td>
-                </tr>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => employee.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => employee.LastName)</td>
+            </tr>
             }
         </table>
     </div>

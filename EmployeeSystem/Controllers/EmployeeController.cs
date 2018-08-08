@@ -21,5 +21,11 @@ namespace EmployeeSystem.Controllers
             var employees = service.GetAll();
             return View(employees);
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
     }
 }
