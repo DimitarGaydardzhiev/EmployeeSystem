@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DTOs.InputModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Interfaces;
+using System;
 
 namespace EmployeeSystem.Controllers
 {
@@ -20,6 +22,25 @@ namespace EmployeeSystem.Controllers
         {
             var positions = service.All();
             return View(positions);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(PositionInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+
+            service.Add(model);
+
+            return RedirectToAction("All");
         }
     }
 }

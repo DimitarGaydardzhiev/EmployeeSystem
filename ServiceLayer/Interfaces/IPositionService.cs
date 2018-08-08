@@ -1,4 +1,6 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.InputModels;
+using DTOs.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
@@ -6,5 +8,7 @@ namespace ServiceLayer.Interfaces
     public interface IPositionService
     {
         IEnumerable<PositionViewModel> All();
+
+        void Add(PositionInputModel model);
     }
 }

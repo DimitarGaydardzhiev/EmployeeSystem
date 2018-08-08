@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>Employee</th>
+                <th>Position</th>
+            </tr>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => employee.Name)</td>
+                    <td></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="text-right">
+        @Html.ActionLink("Add Employee", "Add", "Employee", null, new Dictionary<string, object>
+           {
+                { "class", "btn btn-primary" }
+           })
+    </div>
+</div>
