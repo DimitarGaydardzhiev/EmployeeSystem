@@ -5,6 +5,6 @@ namespace ServiceLayer.Interfaces
 {
     public interface IPositionService
     {
-        IEnumerable<PositionViewModel> GetAll();
+        IEnumerable<PositionViewModel> All();
     }
 }

@@ -15,10 +15,11 @@ namespace EmployeeSystem.Controllers
             this.service = service;
         }
 
-        public IActionResult GetAll()
+        [HttpGet]
+        public IActionResult All()
         {
-            var positions = service.GetAll();
-            return View();
+            var positions = service.All();
+            return View(positions);
         }
     }
 }

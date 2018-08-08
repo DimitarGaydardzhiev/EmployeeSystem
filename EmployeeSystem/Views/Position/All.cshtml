@@ -1,0 +1,28 @@
+﻿@model IEnumerable<PositionViewModel>
+
+@{
+    ViewData["Title"] = "Company Positions";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th>Position</th>
+                <th>Employees Count</th>
+            </tr>
+            @foreach (var position in Model)
+            {
+                <tr>
+                    <td>>@position.Name</td>
+                    <td>>@position.EmployeesCount</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="text-right">
+        <button class="btn btn-primary float-right">Add Position</button>
+    </div>
+</div>
