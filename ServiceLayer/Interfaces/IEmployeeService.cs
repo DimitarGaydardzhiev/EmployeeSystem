@@ -6,5 +6,9 @@ namespace ServiceLayer.Interfaces
     public interface IEmployeeService
     {
         IEnumerable<EmployeeViewModel> GetAll();
+
+        IEnumerable<RoleViewModel> GetRoles();
+
+        IEnumerable<BaseViewModel> GetPositions();
     }
 }

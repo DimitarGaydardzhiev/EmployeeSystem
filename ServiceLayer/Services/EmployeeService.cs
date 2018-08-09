@@ -11,21 +11,33 @@ namespace ServiceLayer.Services
 {
     public class EmployeeService : BaseService<EmployeeUser>, IEmployeeService
     {
-        private readonly UserManager<AspUser> userManager;
+        private readonly IRoleService roleService;
+        private readonly IPositionService positionService;
 
-        public EmployeeService(IRepository<EmployeeUser> repository, UserManager<AspUser> userManager)
+        public EmployeeService(
+            IRepository<EmployeeUser> repository,
+            IRoleService roleService,
+            IPositionService positionService)
             : base(repository)
         {
-            this.userManager = userManager;
+            this.roleService = roleService;
+            this.positionService = positionService;
         }
 
         public IEnumerable<EmployeeViewModel> GetAll()
         {
-            var result = repository.All().Select(e => new EmployeeViewModel()
-            {
-                Role = ""
-            });
+            return null;
+        }
 
+        public IEnumerable<RoleViewModel> GetRoles()
+        {
+            var result = roleService.All();
+            return result;
+        }
+
+        public IEnumerable<BaseViewModel> GetPositions()
+        {
+            var result = positionService.All();
             return result;
         }
     }

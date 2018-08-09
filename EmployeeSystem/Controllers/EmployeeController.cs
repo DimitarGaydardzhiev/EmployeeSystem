@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DTOs.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Interfaces;
 
@@ -25,7 +26,15 @@ namespace EmployeeSystem.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.Roles = service.GetRoles();
+            ViewBag.Positions = service.GetPositions();
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(EmployeeViewModel model)
+        {
+            return null;
         }
     }
 }

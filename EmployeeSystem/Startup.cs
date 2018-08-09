@@ -49,6 +49,7 @@ namespace EmployeeSystem
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPositionService, PositionService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             services.AddMvc();
         }
