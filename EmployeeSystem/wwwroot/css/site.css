@@ -53,3 +53,13 @@
 .mb-0 {
     margin-bottom: 0px !important;
 }
+
+.table-calendar th:hover, td:hover {
+    background-color: #f5f5f5;
+}
+
+.table-calendar td {
+    cursor: pointer;
+    width: 100px;
+    height: 80px;
+}

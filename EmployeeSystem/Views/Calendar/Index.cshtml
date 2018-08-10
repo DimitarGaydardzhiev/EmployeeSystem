@@ -1,0 +1,31 @@
+﻿@model CurrentMonthViewModel
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+<h4 class="text-center p-1">@Model.Month - @DateTime.Now.Year</h4>
+<hr />
+
+<div class="wrapper">
+    <table class="table table-calendar">
+        <thead>
+            <tr>
+                @for (int i = 0; i < ViewBag.Months.Length; i++)
+                {
+                    <th class="text-center">@ViewBag.Months[i]</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < 5; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < 7; j++)
+                    {
+                        <td class="table-bordered text-center">@Model.Dates[i, j]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

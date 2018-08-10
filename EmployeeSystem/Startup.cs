@@ -50,6 +50,7 @@ namespace EmployeeSystem
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ICalendarService, CalendarService>();
 
             services.AddMvc();
         }
