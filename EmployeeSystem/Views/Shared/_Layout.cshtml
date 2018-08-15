@@ -44,17 +44,14 @@
                                 <li class="p-2"><a asp-area="" asp-controller="Position" asp-action="All">Company Positions</a></li>
                             </ul>
                         </li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" style="margin-right: 5px;" href="#" data-toggle="dropdown">Requests <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="GetAll">My Requests</a></li>
-                                <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="GetAll">New Requests</a></li>
+                                <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="MyRequests">My Requests</a></li>
+                                <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="Add">New Request</a></li>
                                 @if (User.IsInRole("administrator"))
                                 {
-                                    <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="GetAll">Pending Requests</a></li>
+                                    <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="Pending">Pending Requests</a></li>
                                 }
                             </ul>
                         </li>

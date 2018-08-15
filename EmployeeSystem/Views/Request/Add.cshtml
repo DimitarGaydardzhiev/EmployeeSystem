@@ -1,0 +1,31 @@
+﻿@model RequestViewModel
+
+@{
+    ViewData["Title"] = "Create New Request";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Create a new employee account.</h4>
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.From)
+                @Html.TextBoxFor(model => model.From, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.To)
+                @Html.TextBoxFor(model => model.To, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.Type)
+                @Html.DropDownListFor(model => model.Type, new SelectList(ViewBag.Positions, "Id", "Name"), new { @class = "form-control" })
+            </div>*@
+            <button type="submit" class="btn btn-default">Create</button>
+        </form>
+    </div>
+</div>
