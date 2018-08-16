@@ -15,6 +15,9 @@ using DatLayer.Interfaces;
 using DatLayer;
 using ServiceLayer.Interfaces;
 using ServiceLayer.Services;
+using Microsoft.AspNetCore.Http;
+using DataLayer.Interfaces;
+using DataLayer;
 
 namespace EmployeeSystem
 {
@@ -45,13 +48,17 @@ namespace EmployeeSystem
             .AddDefaultTokenProviders();
 
             // Add application services.
-            services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IUserResolver, UserResolverService>();
+
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<ICalendarService, CalendarService>();
             services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<IRequestTypeService, RequestTypeService>();
 
             services.AddMvc();
         }

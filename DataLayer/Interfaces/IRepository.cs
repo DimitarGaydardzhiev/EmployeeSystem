@@ -5,6 +5,8 @@ namespace DatLayer.Interfaces
 {
     public interface IRepository<T>
     {
+        int UserId { get; set; }
+
         IQueryable<T> All();
 
         T Find(object id);

@@ -1,4 +1,5 @@
-﻿using DatLayer.Interfaces;
+﻿using DataLayer.Interfaces;
+using DatLayer.Interfaces;
 using DbEntities.Interfaces;
 using EmployeeSystem.Data;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +11,16 @@ namespace DatLayer
     public class GenericRepository<T> : IRepository<T> where T : class, IBase, new()
     {
         private readonly EmployeeSystemContext context;
+
         private readonly DbSet<T> set;
 
-        public GenericRepository(EmployeeSystemContext context)
+        public int UserId { get; set; }
+
+        public GenericRepository(EmployeeSystemContext context, IUserResolver userService)
         {
             this.context = context;
             set = context.Set<T>();
+            UserId = userService.GetUserId();
         }
 
         public void Add(T entity)

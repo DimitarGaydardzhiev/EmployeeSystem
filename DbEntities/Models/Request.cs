@@ -14,6 +14,9 @@ namespace DbEntities.Models
         [Required]
         public DateTime To { get; set; }
 
+        [MaxLength(500)]
+        public string Description { get; set; }
+
         public bool IsApproved { get; set; }
 
         public int RequestTypeId { get; set; }

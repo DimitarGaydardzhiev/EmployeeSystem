@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
@@ -426,6 +427,9 @@ namespace DbEntities.Migrations
                                                    VALUES ('5c7cf3b6-3726-4fa8-a1c1-d6c2303821b9', 1, '2018-01-01', '2018-01-01')";
 
             migrationBuilder.Sql(mapUserToAdminCommand);
+
+            string requestTypesCommand = File.ReadAllText(@"..\..\EmployeeSystem\DbEntities\Seed\RequestTypes.sql");
+            migrationBuilder.Sql(requestTypesCommand);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

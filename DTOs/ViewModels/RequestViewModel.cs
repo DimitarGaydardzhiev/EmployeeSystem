@@ -12,9 +12,15 @@ namespace DTOs.ViewModels
         //[Compare("From", ErrorMessage = "Test")]
         public DateTime To { get; set; }
 
+        [MaxLength(500)]
         public string Description { get; set; }
 
         [Required]
-        public int Type { get; set; }
+        [Display(Name = "Request Type")]
+        public int RequestTypeId { get; set; }
+
+        public string RequestType { get; set; }
+
+        public bool IsApproved { get; set; }
     }
 }

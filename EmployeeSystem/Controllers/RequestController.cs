@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DTOs.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Interfaces;
+using System;
 
 namespace EmployeeSystem.Controllers
 {
+    [Authorize]
     [Route("[controller]/[action]")]
     public class RequestController : Controller
     {
@@ -16,20 +20,30 @@ namespace EmployeeSystem.Controllers
         [HttpGet]
         public IActionResult Add()
         {
+            ViewBag.RequestTypes = service.GetRequestTypes();
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Add(PositionInputModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        throw new Exception();
-        //    }
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public IActionResult Add(RequestViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception();
+            }
 
-        //    service.Add(model);
+            service.Add(model);
 
-        //    return RedirectToAction("All");
-        //}
+            return RedirectToAction("MyRequests");
+        }
+
+        [HttpGet]
+        public IActionResult MyRequests()
+        {
+            var result = service.GetMyRequests();
+            return View(result);
+        }
     }
 }
