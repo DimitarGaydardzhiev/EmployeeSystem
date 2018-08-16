@@ -59,6 +59,7 @@ namespace EmployeeSystem
             services.AddScoped<ICalendarService, CalendarService>();
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<IRequestTypeService, RequestTypeService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             services.AddMvc();
         }

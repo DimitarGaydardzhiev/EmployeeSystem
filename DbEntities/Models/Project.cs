@@ -16,6 +16,10 @@ namespace DbEntities.Models
         
         public string Name { get; set; }
 
+        public int ProjectStatusId { get; set; }
+
+        public ProjectStatus Status { get; set; }
+
         [Required]
         public DateTime StartDate { get; set; }
 
