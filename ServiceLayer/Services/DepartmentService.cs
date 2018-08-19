@@ -20,11 +20,12 @@ namespace ServiceLayer.Services
             this.employeeRepository = employeeRepository;
         }
 
-        public IEnumerable<DepartmentViewModel> GetAll()
+        public IEnumerable<DepartmentViewModel> All()
         {
             var result = repository.All()
                 .Select(d => new DepartmentViewModel()
                 {
+                    Id = d.Id,
                     Name = d.Name,
                     EmployeesCount = employeeRepository.All().Where(e => e.DepartmentId == d.Id).Count()
                 });

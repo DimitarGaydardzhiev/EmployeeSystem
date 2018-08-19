@@ -61,6 +61,7 @@ namespace EmployeeSystem
             services.AddScoped<IRequestTypeService, RequestTypeService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddMvc();
         }

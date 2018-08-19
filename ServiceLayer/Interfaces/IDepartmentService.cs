@@ -5,7 +5,7 @@ namespace ServiceLayer.Interfaces
 {
     public interface IDepartmentService
     {
-        IEnumerable<DepartmentViewModel> GetAll();
+        IEnumerable<DepartmentViewModel> All();
 
         void Add(DepartmentViewModel model);
     }

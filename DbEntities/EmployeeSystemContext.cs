@@ -19,7 +19,6 @@ namespace EmployeeSystem.Data
         public DbSet<EmployeeUserProject> EmployeeUserProjects { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Request> Requests { get; set; }
-        public DbSet<Skill> Skills { get; set; }
         public DbSet<EmployeePosition> EmployeePositions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

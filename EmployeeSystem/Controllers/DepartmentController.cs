@@ -20,7 +20,7 @@ namespace EmployeeSystem.Controllers
         [HttpGet]
         public IActionResult All()
         {
-            var departments = service.GetAll();
+            var departments = service.All();
             return View(departments);
         }
 

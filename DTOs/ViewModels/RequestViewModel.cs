@@ -6,10 +6,12 @@ namespace DTOs.ViewModels
     public class RequestViewModel
     {
         [Required]
+        [DataType(DataType.Date)]
         public DateTime From { get; set; }
 
         [Required]
         //[Compare("From", ErrorMessage = "Test")]
+        [DataType(DataType.Date)]
         public DateTime To { get; set; }
 
         [MaxLength(500)]

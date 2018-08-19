@@ -423,8 +423,8 @@ namespace DbEntities.Migrations
 
             migrationBuilder.Sql(setAdminRoleCommand);
 
-            string mapUserToAdminCommand = @"INSERT INTO EmployeeUsers (AspUserId, IsActive, Birthday, InCompanyFrom)
-                                                   VALUES ('5c7cf3b6-3726-4fa8-a1c1-d6c2303821b9', 1, '2018-01-01', '2018-01-01')";
+            string mapUserToAdminCommand = @"INSERT INTO EmployeeUsers (AspUserId, IsActive, Birthday, InCompanyFrom, FirstName, LastName)
+                                                   VALUES ('5c7cf3b6-3726-4fa8-a1c1-d6c2303821b9', 1, '2018-01-01', '2018-01-01', 'admin', 'admin')";
 
             migrationBuilder.Sql(mapUserToAdminCommand);
 

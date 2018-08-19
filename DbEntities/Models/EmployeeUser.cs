@@ -24,6 +24,7 @@ namespace DbEntities.Models
         public DateTime Birthday { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime InCompanyFrom { get; set; }
         
         public DateTime? InCompanyTo { get; set; }
@@ -40,8 +41,6 @@ namespace DbEntities.Models
         
         public int? DepartmentId { get; set; }
 
-        public int? SkillId { get; set; }
-
         public int? EmployeePositionId { get; set; }
 
         [ForeignKey("Manager")]
@@ -54,8 +53,6 @@ namespace DbEntities.Models
         public Department Department { get; set; }
 
         public EmployeePosition EmployeePosition { get; set; }
-
-        public Skill Skill { get; set; }
 
         public IEnumerable<Request> Requests { get; set; }
 

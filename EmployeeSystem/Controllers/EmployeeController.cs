@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Interfaces;
+using System;
 
 namespace EmployeeSystem.Controllers
 {
@@ -19,7 +20,7 @@ namespace EmployeeSystem.Controllers
         [HttpGet]
         public IActionResult All()
         {
-            var employees = service.GetAll();
+            var employees = service.All();
             return View(employees);
         }
 
@@ -28,13 +29,9 @@ namespace EmployeeSystem.Controllers
         {
             ViewBag.Roles = service.GetRoles();
             ViewBag.Positions = service.GetPositions();
+            ViewBag.Departments = service.GetDepartments();
+            ViewBag.Managers = service.GetManagers();
             return View();
-        }
-
-        [HttpPost]
-        public IActionResult Add(EmployeeViewModel model)
-        {
-            return null;
         }
     }
 }
