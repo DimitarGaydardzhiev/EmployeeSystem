@@ -60,6 +60,7 @@ namespace EmployeeSystem
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<IRequestTypeService, RequestTypeService>();
             services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
 
             services.AddMvc();
         }

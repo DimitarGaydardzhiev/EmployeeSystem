@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DatLayer.Interfaces;
+﻿using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
-using EmployeeSystem.Models;
-using Microsoft.AspNetCore.Identity;
 using ServiceLayer.Interfaces;
+using System.Collections.Generic;
 
 namespace ServiceLayer.Services
 {

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<EmployeeViewModel>
+﻿@model IEnumerable<DepartmentViewModel>
 
 @{
-    ViewData["Title"] = "Employees";
+    ViewData["Title"] = "Company Departments";
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -10,16 +10,16 @@
     <div class="table-responsive">
         <table class="table table-hover">
             <tr>
-                <th>Employee</th>
-                <th>Position</th>
+                <th>Name</th>
+                <th>Employees Count</th>
             </tr>
             @if (Model != null)
             {
-                @foreach (var employee in Model)
+                @foreach (var department in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => employee.FirstName)</td>
-                        <td>@Html.DisplayFor(modelItem => employee.LastName)</td>
+                        <td>@Html.DisplayFor(modelItem => department.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => department.EmployeesCount)</td>
                     </tr>
                 }
             }
@@ -28,10 +28,11 @@
     <div class="text-right">
         @if (User.IsInRole("administrator"))
         {
-            @Html.ActionLink("Add Employee", "Add", "Employee", null, new Dictionary<string, object>
+            @Html.ActionLink("Add Department", "Add", "Department", null, new Dictionary<string, object>
                {
                     { "class", "btn btn-primary" }
                })
         }
     </div>
 </div>
+
