@@ -41,6 +41,7 @@ namespace ServiceLayer.Services
                 .Include(e => e.Department)
                 .Select(e => new EmployeeViewModel()
                 {
+                    Id = e.Id,
                     FirstName = e.FirstName,
                     LastName = e.LastName,
                     DateOfBirth = e.Birthday,

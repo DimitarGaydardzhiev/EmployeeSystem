@@ -5,21 +5,6 @@
 
 <h2>@ViewData["Title"]</h2>
 
-@{
-    List<SelectListItem> listItems = new List<SelectListItem>();
-    listItems.Add(new SelectListItem
-    {
-        Text = "administrator",
-        Value = "administrator"
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "user",
-        Value = "user",
-        Selected = true
-    });
-}
-
 <div class="row">
     <div class="col-md-4">
         <form method="post" asp-controller="Account" asp-action="Register">

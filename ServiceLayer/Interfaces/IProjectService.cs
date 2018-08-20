@@ -6,5 +6,9 @@ namespace ServiceLayer.Interfaces
     public interface IProjectService
     {
         IEnumerable<ProjectViewModel> GetCompanyProjects();
+
+        ProjectViewModel GetEmployees();
+
+        void Add(ProjectViewModel model);
     }
 }

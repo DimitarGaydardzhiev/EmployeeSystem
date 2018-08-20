@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DTOs.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Interfaces;
+using System;
 
 namespace EmployeeSystem.Controllers
 {
@@ -26,7 +28,22 @@ namespace EmployeeSystem.Controllers
         [Authorize(Roles = "administrator")]
         public IActionResult Add()
         {
-            return View();
+            var result = service.GetEmployees();
+            return View(result);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "administrator")]
+        public IActionResult Add(ProjectViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new Exception();
+            }
+
+            service.Add(model);
+
+            return RedirectToAction("All");
         }
     }
 }

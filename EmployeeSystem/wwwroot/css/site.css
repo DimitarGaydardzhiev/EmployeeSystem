@@ -88,3 +88,10 @@
 .round {
     border-radius: 50%;
 }
+
+.scrollable-container {
+    display: block;
+    max-height: 200px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}

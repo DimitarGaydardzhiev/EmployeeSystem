@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.ViewModels
 {
-    public class EmployeeViewModel
+    public class EmployeeViewModel : BaseViewModel
     {
         [Required]
         [Display(Name = "First Name")]
@@ -28,7 +28,7 @@ namespace DTOs.ViewModels
 
         [Display(Name = "Department")]
         public int DepartmentId { get; set; }
-        
+
         public string Department { get; set; }
 
         [Required]
@@ -36,6 +36,7 @@ namespace DTOs.ViewModels
         public int ManagerId { get; set; }
 
         [Display(Name = "Personal Description")]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         [DataType(DataType.Date)]

@@ -18,7 +18,13 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => project.Name)</td>
-                    <td>@Html.DisplayFor(modelItem => project.Employees)</td>
+                    <td>
+                        @foreach (var employee in project.Employees)
+                        {
+                            @(employee.Name)
+                            <br />
+                        }
+                    </td>
                     <td>@Html.DisplayFor(modelItem => project.Status)</td>
                 </tr>
             }
