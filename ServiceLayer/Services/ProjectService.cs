@@ -79,7 +79,7 @@ namespace ServiceLayer.Services
             };
 
             var projectId = repository.Save(result);
-            
+
             model.Employees.ForEach(e =>
             {
                 var employeeUserProject = new EmployeeUserProject()
@@ -93,6 +93,24 @@ namespace ServiceLayer.Services
 
             employeeUserProjectRepository.SaveChanges();
             repository.SaveChanges();
+        }
+
+        public IEnumerable<ProjectViewModel> GetUserProjects()
+        {
+            var userId = repository.UserId;
+
+            var result = repository.All()
+                .Where(p => p.EmployeeUserProjects.Any(eup => eup.EmployeeUserId == userId))
+                .Select(p => new ProjectViewModel()
+                {
+                    Name = p.Name,
+                    Status = p.Status.ToString(),
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    Description = p.Description
+                });
+
+            return result;
         }
     }
 }

@@ -10,5 +10,7 @@ namespace ServiceLayer.Interfaces
         ProjectViewModel GetEmployees();
 
         void Add(ProjectViewModel model);
+
+        IEnumerable<ProjectViewModel> GetUserProjects();
     }
 }

@@ -52,6 +52,7 @@
                                 @if (User.IsInRole("administrator"))
                                 {
                                     <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="Pending">Pending Requests</a></li>
+                                    <li class="p-2"><a asp-area="" asp-controller="Request" asp-action="Approved">Approved Requests</a></li>
                                 }
                             </ul>
                         </li>
@@ -59,7 +60,7 @@
                             <a class="dropdown-toggle" style="margin-right: 5px;" href="#" data-toggle="dropdown">Projects <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li class="p-2"><a asp-area="" asp-controller="Project" asp-action="All">Company Projects</a></li>
-                                <li class="p-2"><a asp-area="" asp-controller="Project" asp-action="MyProjects">My Projects</a></li>
+                                <li class="p-2"><a asp-area="" asp-controller="Project" asp-action="My">My Projects</a></li>
                                 @if (User.IsInRole("administrator"))
                                 {
                                     <li class="p-2"><a asp-area="" asp-controller="Project" asp-action="Add">Add Project</a></li>

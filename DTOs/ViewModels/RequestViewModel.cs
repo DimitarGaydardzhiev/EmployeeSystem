@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.ViewModels
 {
-    public class RequestViewModel
+    public class RequestViewModel : BaseViewModel
     {
         [Required]
         [DataType(DataType.Date)]
@@ -23,6 +23,8 @@ namespace DTOs.ViewModels
 
         public string RequestType { get; set; }
 
-        public bool IsApproved { get; set; }
+        public string IsApproved { get; set; }
+
+        public string User { get; set; }
     }
 }

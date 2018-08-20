@@ -7,8 +7,16 @@ namespace ServiceLayer.Interfaces
     {
         IEnumerable<BaseViewModel> GetRequestTypes();
 
+        IEnumerable<RequestViewModel> GetMyRequests();
+
+        IEnumerable<RequestViewModel> GetPendingRequests();
+
+        IEnumerable<RequestViewModel> GetApprovedRequests();
+
         void Add(RequestViewModel model);
 
-        IEnumerable<RequestViewModel> GetMyRequests();
+        void ApproveRequest(int requestId);
+
+        void UnapproveRequest(int requestId);
     }
 }

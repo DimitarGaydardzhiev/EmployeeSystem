@@ -45,5 +45,33 @@ namespace EmployeeSystem.Controllers
             var result = service.GetMyRequests();
             return View(result);
         }
+
+        [HttpGet]
+        public IActionResult Pending()
+        {
+            var result = service.GetPendingRequests();
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult Approve(int requestId)
+        {
+            service.ApproveRequest(requestId);
+            return RedirectToAction("Pending");
+        }
+
+        [HttpPost]
+        public IActionResult Unapprove(int requestId)
+        {
+            service.UnapproveRequest(requestId);
+            return RedirectToAction("Approved");
+        }
+
+        [HttpGet]
+        public IActionResult Approved()
+        {
+            var result = service.GetApprovedRequests();
+            return View(result);
+        }
     }
 }

@@ -22,7 +22,7 @@
                     <td>@Html.DisplayFor(modelItem => request.RequestType)</td>
                     <td>@Html.DisplayFor(modelItem => request.From)</td>
                     <td>@Html.DisplayFor(modelItem => request.To)</td>
-                    @if (request.IsApproved)
+                    @if (request.IsApproved == "True")
                     {
                         <td class="text-success font-weight-bold">@request.IsApproved</td>
                     }

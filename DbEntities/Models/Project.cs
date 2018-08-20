@@ -25,6 +25,9 @@ namespace DbEntities.Models
 
         public DateTime EndDate { get; set; }
 
+        [MaxLength(500)]
+        public string Description { get; set; }
+
         public IEnumerable<EmployeeUserProject> EmployeeUserProjects { get; set; }
     }
 }

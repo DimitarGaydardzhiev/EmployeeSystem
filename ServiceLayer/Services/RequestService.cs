@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using DatLayer.Interfaces;
+﻿using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
-using EmployeeSystem.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ServiceLayer.Services
 {
@@ -52,7 +49,7 @@ namespace ServiceLayer.Services
                 To = model.To,
                 RequestTypeId = model.RequestTypeId,
                 Description = model.Description,
-                IsApproved = model.IsApproved
+                IsApproved = false
             };
 
             repository.Add(newRequest);
@@ -70,10 +67,68 @@ namespace ServiceLayer.Services
                     Description = r.Description,
                     From = r.From,
                     To = r.To,
-                    RequestType = r.RequestType.Name
+                    RequestType = r.RequestType.Name,
+                    IsApproved = r.IsApproved.ToString()
                 });
 
             return result;
+        }
+
+        public IEnumerable<RequestViewModel> GetPendingRequests()
+        {
+            // TODO: Get requests for employees by mnanager
+            var result = GetRequests(false);
+            return result;
+        }
+
+        public IEnumerable<RequestViewModel> GetApprovedRequests()
+        {
+            var result = GetRequests(true);
+            return result;
+        }
+
+        public void ApproveRequest(int requestId)
+        {
+            ManageRequest(requestId, true);
+        }
+
+        public void UnapproveRequest(int requestId)
+        {
+            ManageRequest(requestId, false);
+        }
+
+        private IEnumerable<RequestViewModel> GetRequests(bool isApproved)
+        {
+            var result = repository.All()
+                .Include(r => r.EmployeeUser)
+                .Include(r => r.RequestType)
+                .Where(r => r.IsApproved == isApproved)
+                .Select(r => new RequestViewModel()
+                {
+                    Id = r.Id,
+                    User = $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}",
+                    From = r.From,
+                    To = r.To,
+                    RequestType = r.RequestType.Name,
+                    Description = r.Description,
+                    IsApproved = r.IsApproved.ToString()
+                });
+
+            return result;
+        }
+
+        private void ManageRequest(int requestId, bool status)
+        {
+            var request = repository.Find(requestId);
+
+            if (request == null)
+            {
+                throw new Exception("Request not found");
+            }
+
+            request.IsApproved = status;
+            repository.Update(request);
+            repository.SaveChanges();
         }
     }
 }

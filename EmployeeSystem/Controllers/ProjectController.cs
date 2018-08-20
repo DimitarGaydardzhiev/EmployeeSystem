@@ -45,5 +45,12 @@ namespace EmployeeSystem.Controllers
 
             return RedirectToAction("All");
         }
+
+        [HttpGet]
+        public IActionResult My()
+        {
+            var result = service.GetUserProjects();
+            return View(result);
+        }
     }
 }
