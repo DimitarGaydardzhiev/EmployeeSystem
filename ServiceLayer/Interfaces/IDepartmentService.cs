@@ -8,5 +8,7 @@ namespace ServiceLayer.Interfaces
         IEnumerable<DepartmentViewModel> All();
 
         void Add(DepartmentViewModel model);
+
+        void Delete(int departmentId);
     }
 }

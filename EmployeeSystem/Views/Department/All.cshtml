@@ -12,6 +12,7 @@
             <tr>
                 <th>Name</th>
                 <th>Employees Count</th>
+                <th></th>
             </tr>
             @if (Model != null)
             {
@@ -20,6 +21,17 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => department.Name)</td>
                         <td>@Html.DisplayFor(modelItem => department.EmployeesCount)</td>
+                        @if (User.IsInRole("administrator"))
+                        {
+                            <td>
+                                <form method="post" asp-controller="Department" asp-action="Delete">
+                                    <input type="hidden" name="departmentId" value="@department.Id" />
+                                    <button type="submit" class="btn btn-link">
+                                        <span class="text-danger">Delete</span>
+                                    </button>
+                                </form>
+                            </td>
+                        }
                     </tr>
                 }
             }

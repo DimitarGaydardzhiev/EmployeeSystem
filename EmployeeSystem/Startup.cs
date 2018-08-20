@@ -18,6 +18,7 @@ using ServiceLayer.Services;
 using Microsoft.AspNetCore.Http;
 using DataLayer.Interfaces;
 using DataLayer;
+using NToastNotify;
 
 namespace EmployeeSystem
 {
@@ -63,7 +64,12 @@ namespace EmployeeSystem
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IAccountService, AccountService>();
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddNToastNotifyToastr(new ToastrOptions()
+                {
+                    ProgressBar = false,
+                    PositionClass = ToastPositions.BottomRight
+                }); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +89,8 @@ namespace EmployeeSystem
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseNToastNotify();
 
             app.UseMvc(routes =>
             {

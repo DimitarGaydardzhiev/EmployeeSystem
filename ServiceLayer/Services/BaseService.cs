@@ -1,4 +1,6 @@
 ﻿using DatLayer.Interfaces;
+using DbEntities.Models;
+using System;
 
 namespace ServiceLayer.Services
 {
@@ -9,6 +11,28 @@ namespace ServiceLayer.Services
         public BaseService(IRepository<T> repository)
         {
             this.repository = repository;
+        }
+
+        public virtual void Delete(int id)
+        {
+            var entity = repository.Find(id);
+
+            if (entity == null)
+            {
+                throw new Exception("Entity not found");
+            }
+
+            if (typeof(T) == typeof(EmployeeUser))
+            {
+                var user = entity as EmployeeUser;
+                user.IsActive = false;
+            }
+            else
+            {
+                repository.Delete(entity);
+            }
+
+            repository.SaveChanges();
         }
     }
 }
