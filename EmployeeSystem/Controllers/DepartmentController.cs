@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
 using ServiceLayer.Interfaces;
+using ServiceLayer.Utils;
 using System;
 
 namespace EmployeeSystem.Controllers
@@ -42,7 +43,7 @@ namespace EmployeeSystem.Controllers
             }
 
             service.Add(model);
-            ShowNotification("Department added successfully", ToastrSeverity.Success);
+            ShowNotification(SuccessMessages.SuccessAdd, ToastrSeverity.Success);
 
             return RedirectToAction("All");
         }
@@ -57,12 +58,13 @@ namespace EmployeeSystem.Controllers
             try
             {
                 service.Delete(id);
-                ShowNotification("Department deleted successfully", ToastrSeverity.Success);
+                ShowNotification(SuccessMessages.SuccesslDelete, ToastrSeverity.Success);
                 return RedirectToAction("All", null);
             }
             catch (Exception ex)
             {
-                return this.BadRequest(ex.Message);
+                ShowNotification(ex.Message, ToastrSeverity.Error);
+                return RedirectToAction("All", null);
             }
         }
     }

@@ -4,6 +4,8 @@ using System.Linq;
 using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 
 namespace ServiceLayer.Services
@@ -27,7 +29,7 @@ namespace ServiceLayer.Services
                 {
                     Id = d.Id,
                     Name = d.Name,
-                    EmployeesCount = employeeRepository.All().Where(e => e.DepartmentId == d.Id).Count()
+                    EmployeesCount = d.Employees.Count()
                 });
 
             return result;
@@ -39,9 +41,7 @@ namespace ServiceLayer.Services
                 .FirstOrDefault(d => d.Name == model.Name);
 
             if (department != null)
-            {
-                throw new Exception("Department already added");
-            }
+                throw new Exception(ErrorMessages.ObjectAlreadyAddedMessage);
 
             var result = new Department()
             {
@@ -50,6 +50,18 @@ namespace ServiceLayer.Services
 
             repository.Add(result);
             repository.SaveChanges();
+        }
+
+        public override void Delete(int id)
+        {
+            var department = repository.All()
+                .Include(d => d.Employees)
+                .FirstOrDefault(d => d.Id == id);
+
+            if (department != null && department.Employees.Count() > 0)
+                throw new InvalidDeleteException(ErrorMessages.DepartmentHasEmployeesMessage);
+
+            base.Delete(id);
         }
     }
 }
