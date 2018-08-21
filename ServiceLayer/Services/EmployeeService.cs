@@ -68,6 +68,7 @@ namespace ServiceLayer.Services
         public IEnumerable<BaseViewModel> GetManagers()
         {
             var result = repository.All()
+                 .Where(e => e.IsActive)
                  .Select(m => new BaseViewModel()
                  {
                      Id = m.Id,

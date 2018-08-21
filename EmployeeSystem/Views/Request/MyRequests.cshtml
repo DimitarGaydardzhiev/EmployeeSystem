@@ -15,6 +15,8 @@
                 <th>To</th>
                 <th>Is Approved</th>
                 <th>Description</th>
+                <th></th>
+                <th></th>
             </tr>
             @foreach (var request in Model)
             {
@@ -31,6 +33,12 @@
                         <td class="text-danger font-weight-bold">@request.IsApproved</td>
                     }
                     <td>@Html.DisplayFor(modelItem => request.Description)</td>
+                    <td>
+                        <button type="submit" class="btn btn-success">Edit</button>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </td>
                 </tr>
             }
         </table>
