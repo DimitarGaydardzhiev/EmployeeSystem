@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Employees";
+    bool areCurrent = Model.Any(e => e.IsActive);
 }
 
 <h2>@ViewData["Title"]</h2>
@@ -13,8 +14,13 @@
                 <th>Position</th>
                 <th>Birthday</th>
                 <th>In Company From</th>
+                @if (!areCurrent)
+                {
+                    <th>In Company To</th>
+                }
                 <th>Department</th>
                 <th>Description</th>
+                <th></th>
             </tr>
             @if (Model != null)
             {
@@ -25,20 +31,32 @@
                         <td>@Html.DisplayFor(modelItem => employee.Position)</td>
                         <td>@Html.DisplayFor(modelItem => employee.DateOfBirth)</td>
                         <td>@employee.StartingDate.ToString("dd MMM yyyy")</td>
+                        @if (!areCurrent)
+                        {
+                            <td>@employee.InCompanyTo?.ToString("dd MMM yyyy")</td>
+                        }
                         <td>@Html.DisplayFor(modelItem => employee.Department)</td>
                         <td>@Html.DisplayFor(modelItem => employee.Description)</td>
+                        @if (areCurrent)
+                        {
+                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                               {
+                                   Id = employee.Id,
+                                   ControllerName = "Employee"
+                               })
+                        }
                     </tr>
                 }
             }
         </table>
     </div>
     <div class="text-right">
-        @if (User.IsInRole("administrator"))
-        {
+        @if (User.IsInRole("administrator") && areCurrent)
+{
             @Html.ActionLink("Add Employee", "Add", "Employee", null, new Dictionary<string, object>
-               {
-                    { "class", "btn btn-primary" }
-               })
-        }
+   {
+        { "class", "btn btn-primary" }
+   })
+}
     </div>
 </div>

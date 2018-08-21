@@ -1,6 +1,7 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using ServiceLayer.Interfaces;
 using System;
 
@@ -8,11 +9,12 @@ namespace EmployeeSystem.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class EmployeeController : Controller
+    public class EmployeeController : BaseController
     {
         private readonly IEmployeeService service;
 
-        public EmployeeController(IEmployeeService service)
+        public EmployeeController(IEmployeeService service, IToastNotification toastNotification)
+            : base(toastNotification)
         {
             this.service = service;
         }
@@ -25,6 +27,13 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpGet]
+        public IActionResult Former()
+        {
+            var employees = service.GetFormerEmployees();
+            return View("All", employees);
+        }
+
+        [HttpGet]
         public IActionResult Add()
         {
             ViewBag.Roles = service.GetRoles();
@@ -32,6 +41,25 @@ namespace EmployeeSystem.Controllers
             ViewBag.Departments = service.GetDepartments();
             ViewBag.Managers = service.GetManagers();
             return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "administrator")]
+        public IActionResult Delete(int id)
+        {
+            if (id == 0)
+                return this.BadRequest();
+
+            try
+            {
+                service.Delete(id);
+                ShowNotification("Employee deleted successfully", ToastrSeverity.Success);
+                return RedirectToAction("All", null);
+            }
+            catch (Exception ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
         }
     }
 }

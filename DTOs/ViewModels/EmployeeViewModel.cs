@@ -48,6 +48,11 @@ namespace DTOs.ViewModels
         [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime StartingDate { get; set; } = DateTime.Now.Date;
 
+        [DataType(DataType.Date)]
+        [Display(Name = "In Company To")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? InCompanyTo { get; set; } = DateTime.Now.Date;
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -63,5 +68,7 @@ namespace DTOs.ViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool IsActive { get; set; }
     }
 }

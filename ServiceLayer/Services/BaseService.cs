@@ -26,6 +26,7 @@ namespace ServiceLayer.Services
             {
                 var user = entity as EmployeeUser;
                 user.IsActive = false;
+                user.InCompanyTo = DateTime.Now;
             }
             else
             {

@@ -1,0 +1,13 @@
+﻿@model DeleteViewmModel
+
+@if (User.IsInRole("administrator"))
+{
+    <td>
+        <form method="post" asp-controller="@Model.ControllerName" asp-action="Delete">
+            <input type="hidden" name="id" value="@Model.Id"/>
+            <button type="submit" class="btn btn-link">
+                <span class="text-danger">@Model.ButtonName</span>
+            </button>
+        </form>
+    </td>
+}

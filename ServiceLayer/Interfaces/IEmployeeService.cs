@@ -14,5 +14,9 @@ namespace ServiceLayer.Interfaces
         IEnumerable<BaseViewModel> GetDepartments();
 
         IEnumerable<BaseViewModel> GetManagers();
+
+        IEnumerable<EmployeeViewModel> GetFormerEmployees();
+
+        void Delete(int employeeId);
     }
 }

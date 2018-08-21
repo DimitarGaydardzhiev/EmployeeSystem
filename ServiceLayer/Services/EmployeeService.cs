@@ -5,6 +5,7 @@ using EmployeeSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,22 +37,13 @@ namespace ServiceLayer.Services
 
         public IEnumerable<EmployeeViewModel> All()
         {
-            // TODO: Get role name
-            var result = repository.All()
-                .Include(e => e.Department)
-                .Select(e => new EmployeeViewModel()
-                {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    DateOfBirth = e.Birthday,
-                    Description = e.PersonalDescription,
-                    StartingDate = e.InCompanyFrom,
-                    Department = e.Department.Name,
-                    Position = e.EmployeePosition.Name,
-                    //Role = userManager.GetRolesAsync(e.AspUser).Result[0]
-                });
+            var result = GetEmployees(isActive: true);
+            return result;
+        }
 
+        public IEnumerable<EmployeeViewModel> GetFormerEmployees()
+        {
+            var result = GetEmployees(isActive: false);
             return result;
         }
 
@@ -81,6 +73,28 @@ namespace ServiceLayer.Services
                      Id = m.Id,
                      Name = $"{m.FirstName} {m.LastName}"
                  });
+
+            return result;
+        }
+
+        private IEnumerable<EmployeeViewModel> GetEmployees(bool isActive)
+        {
+            var result = repository.All()
+                .Include(e => e.Department)
+                .Where(e => e.IsActive == isActive)
+                .Select(e => new EmployeeViewModel()
+                {
+                    Id = e.Id,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    DateOfBirth = e.Birthday,
+                    Description = e.PersonalDescription,
+                    StartingDate = e.InCompanyFrom,
+                    InCompanyTo = e.InCompanyTo,
+                    Department = e.Department.Name,
+                    Position = e.EmployeePosition.Name,
+                    IsActive = e.IsActive
+                });
 
             return result;
         }

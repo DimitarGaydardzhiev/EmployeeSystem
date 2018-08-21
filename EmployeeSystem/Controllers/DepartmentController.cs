@@ -49,14 +49,14 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize(Roles = "administrator")]
-        public IActionResult Delete(int departmentId)
+        public IActionResult Delete(int id)
         {
-            if (departmentId == 0)
+            if (id == 0)
                 return this.BadRequest();
 
             try
             {
-                service.Delete(departmentId);
+                service.Delete(id);
                 ShowNotification("Department deleted successfully", ToastrSeverity.Success);
                 return RedirectToAction("All", null);
             }
