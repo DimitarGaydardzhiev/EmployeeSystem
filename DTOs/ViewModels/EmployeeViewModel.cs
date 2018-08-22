@@ -41,12 +41,12 @@ namespace DTOs.ViewModels
 
         [DataType(DataType.Date)]
         [Display(Name = "Date Of Birth")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Starting Date")]
         [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime StartingDate { get; set; } = DateTime.Now.Date;
+        public DateTime? StartingDate { get; set; } = DateTime.Now.Date;
 
         [DataType(DataType.Date)]
         [Display(Name = "In Company To")]

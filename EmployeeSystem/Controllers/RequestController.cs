@@ -1,22 +1,26 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Enums;
+using DTOs.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using ServiceLayer.Interfaces;
+using ServiceLayer.Utils;
 using System;
 
 namespace EmployeeSystem.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class RequestController : Controller
+    public class RequestController : BaseController
     {
         private readonly IRequestService service;
 
-        public RequestController(IRequestService service)
+        public RequestController(IRequestService service, IToastNotification toastNotification) 
+            : base(toastNotification)
         {
             this.service = service;
         }
-        
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -29,14 +33,24 @@ namespace EmployeeSystem.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Add(RequestViewModel model)
         {
-            if (!ModelState.IsValid)
+            ViewBag.RequestTypes = service.GetRequestTypes();
+            if (ModelState.IsValid)
             {
-                throw new Exception();
+                try
+                {
+                    service.Add(model);
+                }
+                catch (Exception e)
+                {
+                    ShowNotification(e.Message, ToastrSeverity.Error);
+                    return View("Add", model);
+                }
+                ShowNotification(SuccessMessages.SuccessAdd, ToastrSeverity.Success);
+
+                return RedirectToAction("MyRequests");
             }
-
-            service.Add(model);
-
-            return RedirectToAction("MyRequests");
+            
+            return View("Add", model);
         }
 
         [HttpGet]
@@ -47,6 +61,7 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "administrator")]
         public IActionResult Pending()
         {
             var result = service.GetPendingRequests();
@@ -54,6 +69,7 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "administrator")]
         public IActionResult Approve(int requestId)
         {
             service.ApproveRequest(requestId);
@@ -61,6 +77,7 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "administrator")]
         public IActionResult Unapprove(int requestId)
         {
             service.UnapproveRequest(requestId);
@@ -72,6 +89,26 @@ namespace EmployeeSystem.Controllers
         {
             var result = service.GetApprovedRequests();
             return View(result);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "administrator")]
+        public IActionResult Delete(int id)
+        {
+            if (id == 0)
+                return this.BadRequest();
+
+            try
+            {
+                service.Delete(id);
+                ShowNotification(SuccessMessages.SuccesslDelete, ToastrSeverity.Success);
+                return RedirectToAction("MyRequests", null);
+            }
+            catch (Exception ex)
+            {
+                ShowNotification(ex.Message, ToastrSeverity.Error);
+                return RedirectToAction("MyRequests", null);
+            }
         }
     }
 }

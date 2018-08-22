@@ -24,21 +24,31 @@
                     <td>@Html.DisplayFor(modelItem => request.RequestType)</td>
                     <td>@Html.DisplayFor(modelItem => request.From)</td>
                     <td>@Html.DisplayFor(modelItem => request.To)</td>
-                    @if (request.IsApproved == "True")
+                    @if (request.IsApproved)
                     {
-                        <td class="text-success font-weight-bold">@request.IsApproved</td>
+                        <td class="text-success font-weight-bold">True</td>
                     }
                     else
                     {
-                        <td class="text-danger font-weight-bold">@request.IsApproved</td>
+                        <td class="text-danger font-weight-bold">False</td>
                     }
                     <td>@Html.DisplayFor(modelItem => request.Description)</td>
-                    <td>
-                        <button type="submit" class="btn btn-success">Edit</button>
-                    </td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </td>
+                    @if (!request.IsApproved)
+                    {
+                        <td>
+                            <button type="submit" class="btn btn-success">Edit</button>
+                        </td>
+                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                               {
+                                   Id = request.Id,
+                                   ControllerName = "Request"
+                               })
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                    }
                 </tr>
             }
         </table>

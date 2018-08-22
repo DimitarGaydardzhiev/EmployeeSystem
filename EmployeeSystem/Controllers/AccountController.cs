@@ -94,7 +94,7 @@ namespace EmployeeSystem.Controllers
                 AddErrors(result);
             }
             
-            return RedirectToAction("Add", "Employee", model);
+            return RedirectToAction("Add", "Employee", ModelState);
         }
 
         [HttpPost]

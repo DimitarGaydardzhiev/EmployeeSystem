@@ -2,6 +2,7 @@
 using DbEntities.Models;
 using DTOs.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace ServiceLayer.Services
             var request = repository
                 .All()
                 .FirstOrDefault(r => r.EmployeeUserId == userId &&
-                                    (r.From <= model.From && model.From <= model.To));
+                                    (r.From >= model.From && model.From <= model.To));
 
             // TODO: Exception handling
             if (request != null)
@@ -64,11 +65,12 @@ namespace ServiceLayer.Services
                 .Include(r => r.RequestType)
                 .Select(r => new RequestViewModel()
                 {
+                    Id = r.Id,
                     Description = r.Description,
                     From = r.From,
                     To = r.To,
                     RequestType = r.RequestType.Name,
-                    IsApproved = r.IsApproved.ToString()
+                    IsApproved = r.IsApproved
                 });
 
             return result;
@@ -111,7 +113,7 @@ namespace ServiceLayer.Services
                     To = r.To,
                     RequestType = r.RequestType.Name,
                     Description = r.Description,
-                    IsApproved = r.IsApproved.ToString()
+                    IsApproved = r.IsApproved
                 });
 
             return result;
@@ -129,6 +131,17 @@ namespace ServiceLayer.Services
             request.IsApproved = status;
             repository.Update(request);
             repository.SaveChanges();
+        }
+
+        public override void Delete(int id)
+        {
+            var request = repository.All()
+                .FirstOrDefault(d => d.Id == id);
+
+            if (request != null && request.IsApproved)
+                throw new InvalidDeleteException(ErrorMessages.ConNotDeleteApprovedRequestMessage);
+
+            base.Delete(id);
         }
     }
 }

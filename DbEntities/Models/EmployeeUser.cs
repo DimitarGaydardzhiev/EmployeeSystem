@@ -19,13 +19,11 @@ namespace DbEntities.Models
         public int Id { get; set; }
 
         public bool IsActive { get; set; }
-
-        [Required]
-        public DateTime Birthday { get; set; }
-
-        [Required]
+        
+        public DateTime? Birthday { get; set; }
+        
         [DataType(DataType.Date)]
-        public DateTime InCompanyFrom { get; set; }
+        public DateTime? InCompanyFrom { get; set; }
         
         public DateTime? InCompanyTo { get; set; }
 

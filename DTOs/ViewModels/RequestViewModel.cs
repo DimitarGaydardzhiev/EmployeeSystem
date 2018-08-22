@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs.ValidationAttributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.ViewModels
@@ -7,11 +8,12 @@ namespace DTOs.ViewModels
     {
         [Required]
         [DataType(DataType.Date)]
+        [DateCompare]
         public DateTime From { get; set; }
 
         [Required]
-        //[Compare("From", ErrorMessage = "Test")]
         [DataType(DataType.Date)]
+        [DateCompare]
         public DateTime To { get; set; }
 
         [MaxLength(500)]
@@ -23,7 +25,7 @@ namespace DTOs.ViewModels
 
         public string RequestType { get; set; }
 
-        public string IsApproved { get; set; }
+        public bool IsApproved { get; set; }
 
         public string User { get; set; }
     }

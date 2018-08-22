@@ -18,5 +18,7 @@ namespace ServiceLayer.Interfaces
         void ApproveRequest(int requestId);
 
         void UnapproveRequest(int requestId);
+
+        void Delete(int id);
     }
 }

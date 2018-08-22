@@ -30,7 +30,7 @@
                         <td>@($"{employee.FirstName} {employee.LastName}")</td>
                         <td>@Html.DisplayFor(modelItem => employee.Position)</td>
                         <td>@Html.DisplayFor(modelItem => employee.DateOfBirth)</td>
-                        <td>@employee.StartingDate.ToString("dd MMM yyyy")</td>
+                        <td>@employee.StartingDate?.ToString("dd MMM yyyy")</td>
                         @if (!areCurrent)
                         {
                             <td>@employee.InCompanyTo?.ToString("dd MMM yyyy")</td>
