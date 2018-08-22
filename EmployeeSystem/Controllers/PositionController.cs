@@ -35,16 +35,26 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "administrator")]
         public IActionResult Add(PositionInputModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                throw new Exception();
+                try
+                {
+                    service.Add(model);
+                }
+                catch (Exception e)
+                {
+                    ShowNotification(e.Message, ToastrSeverity.Error);
+                    return RedirectToAction("Add");
+                }
+                ShowNotification(SuccessMessages.SuccessAdd, ToastrSeverity.Success);
+
+                return RedirectToAction("All");
             }
 
-            service.Add(model);
-
-            return RedirectToAction("All");
+            return View("Add", model);
         }
 
         [HttpPost]

@@ -3,6 +3,7 @@ using DTOs.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 using ServiceLayer.Utils;
 using System;
@@ -35,17 +36,27 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "administrator")]
         public IActionResult Add(DepartmentViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                throw new Exception();
+                try
+                {
+                    service.Add(model);
+                }
+                catch (Exception e)
+                {
+                    ShowNotification(e.Message, ToastrSeverity.Error);
+                    return View("Add", model);
+                }
+                ShowNotification(SuccessMessages.SuccessAdd, ToastrSeverity.Success);
+
+                return RedirectToAction("All");
             }
 
-            service.Add(model);
-            ShowNotification(SuccessMessages.SuccessAdd, ToastrSeverity.Success);
-
-            return RedirectToAction("All");
+            return View("Add", model);
         }
 
         [HttpPost]

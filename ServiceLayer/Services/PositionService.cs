@@ -41,9 +41,7 @@ namespace ServiceLayer.Services
         {
             var position = repository.All().FirstOrDefault(p => p.Name == model.Name);
             if (position != null)
-            {
-                throw new Exception("Position already added");
-            }
+                throw new Exception(ErrorMessages.ObjectAlreadyAddedMessage);
 
             position = new EmployeePosition()
             {

@@ -2,6 +2,7 @@
 using DbEntities.Models;
 using DTOs.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -66,9 +67,7 @@ namespace ServiceLayer.Services
                 .FirstOrDefault(p => p.Name == model.Name);
 
             if (project != null)
-            {
-                throw new Exception("Project already exists");
-            }
+                throw new Exception(ErrorMessages.ObjectAlreadyAddedMessage);
 
             var result = new Project()
             {
