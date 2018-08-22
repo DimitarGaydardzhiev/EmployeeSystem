@@ -10,5 +10,7 @@ namespace ServiceLayer.Interfaces
         IEnumerable<PositionViewModel> All();
 
         void Add(PositionInputModel model);
+
+        void Delete(int id);
     }
 }

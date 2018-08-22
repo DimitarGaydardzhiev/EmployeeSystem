@@ -3,6 +3,8 @@ using DbEntities.Models;
 using DTOs.InputModels;
 using DTOs.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -49,6 +51,18 @@ namespace ServiceLayer.Services
             };
 
             repository.Save(position);
+        }
+
+        public override void Delete(int id)
+        {
+            var position = repository.All()
+                .Include(p => p.Employees)
+                .FirstOrDefault(d => d.Id == id);
+
+            if (position != null && position.Employees.Count() > 0)
+                throw new InvalidDeleteException(ErrorMessages.HasEmployeesMessage);
+
+            base.Delete(id);
         }
     }
 }

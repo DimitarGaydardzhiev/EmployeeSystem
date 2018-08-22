@@ -59,7 +59,7 @@ namespace ServiceLayer.Services
                 .FirstOrDefault(d => d.Id == id);
 
             if (department != null && department.Employees.Count() > 0)
-                throw new InvalidDeleteException(ErrorMessages.DepartmentHasEmployeesMessage);
+                throw new InvalidDeleteException(ErrorMessages.HasEmployeesMessage);
 
             base.Delete(id);
         }

@@ -1,18 +1,22 @@
-﻿using DTOs.InputModels;
+﻿using DTOs.Enums;
+using DTOs.InputModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using ServiceLayer.Interfaces;
+using ServiceLayer.Utils;
 using System;
 
 namespace EmployeeSystem.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class PositionController : Controller
+    public class PositionController : BaseController
     {
         private readonly IPositionService service;
 
-        public PositionController(IPositionService service)
+        public PositionController(IPositionService service, IToastNotification toastNotification)
+            : base(toastNotification)
         {
             this.service = service;
         }
@@ -41,6 +45,26 @@ namespace EmployeeSystem.Controllers
             service.Add(model);
 
             return RedirectToAction("All");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "administrator")]
+        public IActionResult Delete(int id)
+        {
+            if (id == 0)
+                return this.BadRequest();
+
+            try
+            {
+                service.Delete(id);
+                ShowNotification(SuccessMessages.SuccesslDelete, ToastrSeverity.Success);
+                return RedirectToAction("All", null);
+            }
+            catch (Exception ex)
+            {
+                ShowNotification(ex.Message, ToastrSeverity.Error);
+                return RedirectToAction("All", null);
+            }
         }
     }
 }

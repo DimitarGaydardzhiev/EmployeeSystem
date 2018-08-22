@@ -12,12 +12,18 @@
             <tr>
                 <th>Position</th>
                 <th>Employees Count</th>
+                <th></th>
             </tr>
             @foreach (var position in Model)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => position.Name)</td>
                     <td>@Html.DisplayFor(modelItem => position.EmployeesCount)</td>
+                    @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                       {
+                           Id = position.Id,
+                           ControllerName = "Position"
+                       })
                 </tr>
             }
         </table>
