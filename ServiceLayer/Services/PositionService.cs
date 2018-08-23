@@ -31,7 +31,7 @@ namespace ServiceLayer.Services
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    EmployeesCount = employeeRepository.All().Where(e => e.EmployeePositionId == p.Id).Count()
+                    EmployeesCount = employeeRepository.All().Where(e => e.EmployeePositionId == p.Id && e.IsActive).Count()
                 });
 
             return result;

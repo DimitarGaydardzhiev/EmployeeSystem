@@ -1,6 +1,10 @@
-﻿<div class="container">
+﻿@{
+
+}
+<div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-xs-2 col-md-2"></div>
+        <div class="col-md-8">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
@@ -9,31 +13,57 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-xs-6 col-md-6">
-                            @Html.ActionLink(" Main Application ", "Index", "Home", new { area = string.Empty }, new { @class = "btn btn-danger btn-lg glyphicon glyphicon-list-alt" })
-                            <a href="#" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-bookmark"></span> <br />Bookmarks</a>
-                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br />Reports</a>
-                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-comment"></span> <br />Comments</a>
-                        </div>
-                        <div class="col-xs-6 col-md-6">
-                            <a href="#" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br />Users</a>
-                            <a href="#" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br />Notes</a>
-                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-picture"></span> <br />Photos</a>
-                            <a href="#" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br />Tags</a>
+                        <div class="col-xs-11 col-md-12">
+                            <br />
+                            <div class="row p-2 text-center">
+                                <a asp-area="" asp-controller="Employee" asp-action="Add" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-user"></span> <br />Add Employee</a>
+                                <a asp-area="" asp-controller="Department" asp-action="Add" class="btn btn-primary btn-lg" role="button"><span class="glyphicon glyphicon-education"></span> <br />Add Department</a>
+                                <a asp-area="" asp-controller="Position" asp-action="Add" class="btn btn-info btn-lg" role="button"><span class="glyphicon glyphicon-tag"></span> <br />Add Position</a>
+                                <a asp-area="" asp-controller="Project" asp-action="Add" class="btn btn-success btn-lg" role="button"><span class="glyphicon glyphicon-file"></span> <br />Add Project</a>
+                            </div>
+                            <br />
+                            <div class="row p-2 text-center">
+                                <a asp-area="AdminControlls" asp-controller="Report" asp-action="Index" class="btn btn-danger btn-lg" role="button"><span class="glyphicon glyphicon-signal"></span> <br />Reports</a>
+                                <a asp-area="" asp-controller="Request" asp-action="Pending" class="btn btn-warning btn-lg" role="button"><span class="glyphicon glyphicon-bookmark"></span> <br />Pending Requests</a>
+                            </div>
                         </div>
                     </div>
-                    <a href="http://www.jquery2dotnet.com/" class="btn btn-success btn-lg btn-block" role="button"><span class="glyphicon glyphicon-globe"></span> Website</a>
+                    <hr />
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-globe"></span> Main Aplication</a>
                 </div>
             </div>
         </div>
+        <div class="col-xs-2 col-md-2"></div>
     </div>
 </div>
-@*@{
-    var myChart = new Chart(width: 600, height: 400)
-        .AddTitle("Chart Title")
-        .AddSeries(
-            name: "Employee",
-            xValue: new[] { "Peter", "Andrew", "Julie", "Mary", "Dave" },
-            yValues: new[] { "2", "6", "4", "5", "3" })
-        .Write();
-}*@
+@*<script>
+    window.onload = function () {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+	    theme: "light2", // "light1", "light2", "dark1", "dark2"
+	    exportEnabled: true,
+	    //animationEnabled: true,
+	    title: {
+		    text: "Company Employees"
+	    },
+	    subtitles: [{
+		    text: @(DateTime.Now.Month) + "." + (@DateTime.Now.Year)
+	    }],
+	    data: [{
+		    type: "pie",
+		    startAngle: 180,
+		    toolTipContent: "<b>{label}</b>: {y}%",
+		    showInLegend: "true",
+		    legendText: "{label}",
+		    indexLabel: "{label} - {y}%",
+		    dataPoints: @Html.Raw(ViewBag.DataPoints)
+	    }]
+    });
+    chart.render();
+
+    }
+</script>
+<div>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>*@
