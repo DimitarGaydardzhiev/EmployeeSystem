@@ -63,6 +63,7 @@ namespace EmployeeSystem
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IReportService, ReportService>();
 
             services.AddMvc()
                 .AddNToastNotifyToastr(new ToastrOptions()

@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Reports";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@{
+    var reportsType = new List<BaseViewModel>()
+{
+new BaseViewModel(){Id = 1, Name = "Employees by position"}
+};
+}
+<div class="container">
+    <hr />
+    <div class="row">
+        <form method="get" asp-controller="Report" asp-action="GetReport">
+            <div class="form-group col-md-3">
+                @Html.DropDownList("Type",
+                                new SelectList(reportsType, "Id", "Name"),
+                                " -- Select --",
+                                new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-success">View</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (ViewData["Test"] != null)
+{
+    @await Html.PartialAsync("_DiagramPartial")
+}

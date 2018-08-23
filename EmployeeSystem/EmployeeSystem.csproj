@@ -7,12 +7,14 @@
 
 
   <ItemGroup>
+    <PackageReference Include="Chart.Mvc" Version="1.0.0.2" />
     <PackageReference Include="jQuery.Fullcalendar" Version="3.9.0" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" PrivateAssets="All" />
+    <PackageReference Include="Saic.Web.UI.WebControls" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +32,9 @@
 
   <ItemGroup>
     <Content Update="Areas\AdminControlls\Views\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\AdminControlls\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\AdminControlls\Views\_ViewStart.cshtml">
