@@ -75,7 +75,7 @@
                         </li>
                         @if (User.IsInRole("administrator"))
                         {
-                            <li><a asp-area="AdminControlls" asp-controller="Home" asp-action="Index">Admin Panel</a></li>
+                            <li class="admin-link"><a asp-area="AdminControlls" asp-controller="Home" asp-action="Index">Admin Panel</a></li>
                         }
                         @*<li><a asp-area="" asp-controller="Calendar" asp-action="Index">Calendar</a></li>*@
                     }

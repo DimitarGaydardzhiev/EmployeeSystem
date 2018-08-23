@@ -111,3 +111,21 @@
     box-shadow: 5px 10px #888888;
     border-radius: 10px;
 }
+
+.admin-link {
+    background-color: #234d20;
+    border-radius: 10px;
+}
+
+    .admin-link:hover {
+        background-color: #77ab59;
+        color: black !important;
+    }
+
+.admin-link a {
+    color: white !important;
+}
+
+.float-right {
+    float: right !important;
+}
