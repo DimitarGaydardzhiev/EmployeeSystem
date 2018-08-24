@@ -24,13 +24,10 @@ namespace EmployeeSystem.Areas.AdminControlls.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetReport(BaseViewModel model)
+        public IActionResult GetReport(int reportTypeId)
         {
-            var dataPoints = service.GetReport(model.Id);
-
-            //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
-            ViewData["DataPoints"] = JsonConvert.SerializeObject(dataPoints);
-            return View("Index");
+            var dataPoints = service.GetReport(reportTypeId);
+            return View("Index", dataPoints);
         }
     }
 }

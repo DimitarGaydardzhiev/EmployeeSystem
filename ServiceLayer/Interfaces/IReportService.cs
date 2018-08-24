@@ -1,10 +1,9 @@
-﻿using EmployeeSystem.Areas.AdminControlls.Models;
-using System.Collections.Generic;
+﻿using DTOs.ViewModels;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IReportService
     {
-        IEnumerable<DataPoint> GetReport(int id);
+        ChartViewModel GetReport(int id);
     }
 }

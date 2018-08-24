@@ -1,4 +1,4 @@
-﻿@model BaseViewModel
+﻿@model ChartViewModel
 
 @{
     ViewData["Title"] = "Reports";
@@ -9,7 +9,8 @@
 @{
     var reportsType = new List<BaseViewModel>()
 {
-new BaseViewModel(){Id = 1, Name = "Employees by position"}
+new BaseViewModel(){Id = 1, Name = "Employees by position"},
+new BaseViewModel(){Id = 2, Name = "Project Assigned Employees"}
 };
 }
 <div class="container">
@@ -17,7 +18,7 @@ new BaseViewModel(){Id = 1, Name = "Employees by position"}
     <div class="row">
         <form method="get" asp-controller="Report" asp-action="GetReport">
             <div class="form-group col-md-3">
-                @Html.DropDownListFor(m=> m.Id,
+                @Html.DropDownListFor(m => m.ReportTypeId,
                                 new SelectList(reportsType, "Id", "Name"),
                                 " -- Select --",
                                 new { @class = "form-control" })
@@ -29,7 +30,7 @@ new BaseViewModel(){Id = 1, Name = "Employees by position"}
     </div>
 </div>
 
-@if (ViewData["DataPoints"] != null)
+@if (Model != null)
 {
-    @await Html.PartialAsync("ReportChartPartial", ViewData["DataPoints"])
+    @await Html.PartialAsync("ReportChartPartial", Model)
 }

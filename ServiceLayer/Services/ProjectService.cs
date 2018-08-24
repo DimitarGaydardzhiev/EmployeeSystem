@@ -33,11 +33,14 @@ namespace ServiceLayer.Services
                  .ThenInclude(p => p.EmployeeUser)
                  .Select(p => new ProjectViewModel()
                  {
-                     Employees = p.EmployeeUserProjects.Select(eup => new MultiSelectViewModel()
+                     Employees = p.EmployeeUserProjects
+                     .Where(eup => eup.EmployeeUser.IsActive)
+                     .Select(eup => new MultiSelectViewModel()
                      {
                          Id = eup.EmployeeUserId,
                          Name = $"{eup.EmployeeUser.FirstName} {eup.EmployeeUser.LastName}"
-                     }).ToList(),
+                     })
+                     .ToList(),
                      Name = p.Name,
                      StartDate = p.StartDate,
                      EndDate = p.EndDate,

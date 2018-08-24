@@ -1,39 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DatLayer.Interfaces;
+﻿using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.Enums;
+using DTOs.ViewModels;
 using EmployeeSystem.Areas.AdminControlls.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ServiceLayer.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 
 namespace ServiceLayer.Services
 {
     public class ReportService : IReportService
     {
         private readonly IRepository<EmployeeUser> employeeRepository;
+        private readonly IRepository<Project> projectRepository;
+        private readonly IRepository<EmployeeUserProject> employeeUserProjectRepository;
 
-        public ReportService(IRepository<EmployeeUser> employeeRepository)
+        public ReportService(
+            IRepository<EmployeeUser> employeeRepository,
+            IRepository<Project> projectRepository,
+            IRepository<EmployeeUserProject> employeeUserProjectRepository)
         {
             this.employeeRepository = employeeRepository;
+            this.projectRepository = projectRepository;
+            this.employeeUserProjectRepository = employeeUserProjectRepository;
         }
 
-        public IEnumerable<DataPoint> GetReport(int reportTypeId)
+        public ChartViewModel GetReport(int reportTypeId)
         {
-            var result = Enumerable.Empty<DataPoint>();
+            var result = new ChartViewModel();
+            var data = new List<DataPoint>();
 
             switch (reportTypeId)
             {
                 case (int)ReportType.EmployeesByPositions:
-                    result = GetEmployeesByPosition();
+                    data = GetEmployeesByPosition();
+                    result.Data = JsonConvert.SerializeObject(data);
+                    result.ChartTitle = GetReportName(ReportType.EmployeesByPositions);
+                    break;
+                case (int)ReportType.ProjectAssignedEmployees:
+                    data = GetProjectAssignedEmployees();
+                    result.Data = JsonConvert.SerializeObject(data);
+                    result.ChartTitle = GetReportName(ReportType.EmployeesByPositions);
+                    break;
+                default:
+                    result = null;
                     break;
             }
 
             return result;
         }
 
-        private IEnumerable<DataPoint> GetEmployeesByPosition()
+        private List<DataPoint> GetEmployeesByPosition()
         {
             var result = employeeRepository.All()
                 .Include(e => e.EmployeePosition)
@@ -43,9 +65,35 @@ namespace ServiceLayer.Services
                 {
                     Label = e.Key ?? "Not defined",
                     Y = e.Count()
-                });
+                })
+                .ToList();
 
             return result;
+        }
+
+        private List<DataPoint> GetProjectAssignedEmployees()
+        {
+            var result = employeeUserProjectRepository.All()
+                .Include(e => e.Project)
+                .Include(e => e.EmployeeUser)
+                .GroupBy(p => p.Project.Name)
+                .Select(e => new DataPoint()
+                {
+                    Label = e.Key,
+                    Y = e.Select(eup => eup.EmployeeUser).Where(u => u.IsActive).Count()
+                })
+                .ToList();
+
+            return result;
+        }
+
+        private string GetReportName(ReportType employeesByPositions)
+        {
+            var name = ReportType.EmployeesByPositions.ToString();
+            FieldInfo fi = (new ReportType()).GetType().GetField(name);
+            var attribute = (DescriptionAttribute)fi.GetCustomAttribute(typeof(DescriptionAttribute));
+
+            return attribute.Description;
         }
     }
 }
