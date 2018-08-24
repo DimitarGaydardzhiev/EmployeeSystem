@@ -5,6 +5,6 @@ namespace ServiceLayer.Interfaces
 {
     public interface IReportService
     {
-        IEnumerable<DataPoint> GetEmpoyeesData();
+        IEnumerable<DataPoint> GetReport(int id);
     }
 }

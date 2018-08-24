@@ -1,6 +1,7 @@
 ﻿using DTOs.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using ServiceLayer.Interfaces;
 
 namespace EmployeeSystem.Areas.AdminControlls.Controllers
@@ -25,7 +26,10 @@ namespace EmployeeSystem.Areas.AdminControlls.Controllers
         [HttpGet]
         public IActionResult GetReport(BaseViewModel model)
         {
-            ViewData["Test"] = 1;
+            var dataPoints = service.GetReport(model.Id);
+
+            //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewData["DataPoints"] = JsonConvert.SerializeObject(dataPoints);
             return View("Index");
         }
     }
