@@ -19,11 +19,7 @@ namespace EmployeeSystem.Tests.Services
         [Fact]
         public void GetCompanyProjects_ShouldReturn_AllProjects_WithActiveEmployeesCount()
         {
-            var dbOptions = new DbContextOptionsBuilder<EmployeeSystemContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-
-            var db = new EmployeeSystemContext(dbOptions);
+            var db = GetContext();
 
             var userResolver = new Mock<UserResolverService>(null, null);
             var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
@@ -98,11 +94,7 @@ namespace EmployeeSystem.Tests.Services
         [Fact]
         public void GetCompanyProjects_ShouldReturn_AllProjects()
         {
-            var dbOptions = new DbContextOptionsBuilder<EmployeeSystemContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-
-            var db = new EmployeeSystemContext(dbOptions);
+            var db = GetContext();
 
             var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
 
@@ -117,6 +109,17 @@ namespace EmployeeSystem.Tests.Services
             var result = projectService.GetCompanyProjects();
 
             result.Should().HaveCount(2);
+        }
+
+        private EmployeeSystemContext GetContext()
+        {
+            var dbOptions = new DbContextOptionsBuilder<EmployeeSystemContext>()
+               .UseInMemoryDatabase(Guid.NewGuid().ToString())
+               .Options;
+
+            var db = new EmployeeSystemContext(dbOptions);
+
+            return db;
         }
     }
 }
