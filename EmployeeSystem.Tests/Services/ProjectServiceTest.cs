@@ -2,6 +2,7 @@
 using DataLayer.Interfaces;
 using DatLayer;
 using DbEntities.Models;
+using DTOs.ViewModels;
 using EmployeeSystem.Data;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace EmployeeSystem.Tests.Services
         [Fact]
         public void GetCompanyProjects_ShouldReturn_AllProjects_WithActiveEmployeesCount()
         {
-            var db = GetContext();
+            var db = InitContext();
 
             var userResolver = new Mock<UserResolverService>(null, null);
             var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
@@ -94,7 +95,7 @@ namespace EmployeeSystem.Tests.Services
         [Fact]
         public void GetCompanyProjects_ShouldReturn_AllProjects()
         {
-            var db = GetContext();
+            var db = InitContext();
 
             var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
 
@@ -111,7 +112,29 @@ namespace EmployeeSystem.Tests.Services
             result.Should().HaveCount(2);
         }
 
-        private EmployeeSystemContext GetContext()
+        [Fact]
+        public void Add_Project_ShouldThrowException_IfProjectAlreadyExists()
+        {
+            var db = InitContext();
+
+            var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
+
+            var projectService = new ProjectService(projectRepository.Object, null, null);
+
+            var firstProject = new Project() { Name = "First" };
+            var secondProject = new Project() { Name = "Second" }; ;
+
+            db.AddRange(firstProject, secondProject);
+            db.SaveChanges();
+
+            var exception = Assert.Throws<Exception>(() => projectService.Add(new ProjectViewModel()
+            {
+                Name = "First"
+            }));
+            Assert.Equal("Object already exists in the database", exception.Message);
+        }
+
+        private EmployeeSystemContext InitContext()
         {
             var dbOptions = new DbContextOptionsBuilder<EmployeeSystemContext>()
                .UseInMemoryDatabase(Guid.NewGuid().ToString())
