@@ -1,4 +1,5 @@
-﻿using DatLayer.Interfaces;
+﻿using AutoMapper;
+using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -13,13 +14,16 @@ namespace ServiceLayer.Services
     public class RequestService : BaseService<Request>, IRequestService
     {
         private readonly IRequestTypeService requestTypeService;
+        private readonly IMapper mapper;
 
         public RequestService(
             IRepository<Request> repository,
-            IRequestTypeService requestTypeService)
+            IRequestTypeService requestTypeService,
+            IMapper mapper)
             : base(repository)
         {
             this.requestTypeService = requestTypeService;
+            this.mapper = mapper;
         }
 
         public IEnumerable<BaseViewModel> GetRequestTypes()
@@ -36,12 +40,9 @@ namespace ServiceLayer.Services
                 .All()
                 .FirstOrDefault(r => r.EmployeeUserId == userId &&
                                     (r.From >= model.From && model.From <= model.To));
-
-            // TODO: Exception handling
+            
             if (request != null)
-            {
-                throw new System.Exception("There is already a request for these dates");
-            }
+                throw new Exception(ErrorMessages.ThereIsAlreadyRequestForTheseDatesMessage);
 
             var newRequest = new Request()
             {
@@ -59,21 +60,28 @@ namespace ServiceLayer.Services
 
         public IEnumerable<RequestViewModel> GetMyRequests()
         {
-            var result = repository
-                .All()
-                .Where(r => r.EmployeeUserId == repository.UserId)
-                .Include(r => r.RequestType)
-                .Select(r => new RequestViewModel()
-                {
-                    Id = r.Id,
-                    Description = r.Description,
-                    From = r.From,
-                    To = r.To,
-                    RequestType = r.RequestType.Name,
-                    IsApproved = r.IsApproved
-                });
+            //var result = repository
+            //    .All()
+            //    .Where(r => r.EmployeeUserId == repository.UserId)
+            //    .Include(r => r.RequestType)
+            //    .Select(r => new RequestViewModel()
+            //    {
+            //        Id = r.Id,
+            //        Description = r.Description,
+            //        From = r.From,
+            //        To = r.To,
+            //        RequestType = r.RequestType.Name,
+            //        IsApproved = r.IsApproved
+            //    });
 
-            return result;
+            //return result;
+            var requests = repository.All()
+                .Include(r => r.EmployeeUser)
+                .Include(r => r.RequestType)
+                .Where(r => r.EmployeeUserId == repository.UserId)
+                .ToList();
+
+            return mapper.Map<List<Request>, List<RequestViewModel>>(requests);
         }
 
         public IEnumerable<RequestViewModel> GetPendingRequests()
@@ -101,22 +109,28 @@ namespace ServiceLayer.Services
 
         private IEnumerable<RequestViewModel> GetRequests(bool isApproved)
         {
-            var result = repository.All()
+            //var result = repository.All()
+            //    .Include(r => r.EmployeeUser)
+            //    .Include(r => r.RequestType)
+            //    .Where(r => r.IsApproved == isApproved)
+            //    .Select(r => new RequestViewModel()
+            //    {
+            //        Id = r.Id,
+            //        User = $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}",
+            //        From = r.From,
+            //        To = r.To,
+            //        RequestType = r.RequestType.Name,
+            //        Description = r.Description,
+            //        IsApproved = r.IsApproved
+            //    });
+
+            var requests = repository.All()
                 .Include(r => r.EmployeeUser)
                 .Include(r => r.RequestType)
                 .Where(r => r.IsApproved == isApproved)
-                .Select(r => new RequestViewModel()
-                {
-                    Id = r.Id,
-                    User = $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}",
-                    From = r.From,
-                    To = r.To,
-                    RequestType = r.RequestType.Name,
-                    Description = r.Description,
-                    IsApproved = r.IsApproved
-                });
+                .ToList();
 
-            return result;
+            return mapper.Map<List<Request>, List<RequestViewModel>>(requests);
         }
 
         private void ManageRequest(int requestId, bool status)

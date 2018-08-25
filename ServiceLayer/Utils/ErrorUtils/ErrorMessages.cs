@@ -6,6 +6,7 @@
         public const string ObjectAlreadyAddedMessage = "Object already exists in the database";
         public const string ConNotDeleteApprovedRequestMessage = "You can not delete approved request";
         public const string UnableToEditPositionWithEmployeesMessage = "You can not update position with employees";
+        public const string ThereIsAlreadyRequestForTheseDatesMessage = "There is already a request for these dates";
     }
 }
 

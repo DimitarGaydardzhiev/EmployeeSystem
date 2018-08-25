@@ -138,7 +138,7 @@ namespace EmployeeSystem.Tests.Services
             var requestRepository = new Mock<GenericRepository<Request>>(db, Mock.Of<IUserResolver>());
             var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
 
-            return new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>());
+            return new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>(), null);
         }
     }
 }

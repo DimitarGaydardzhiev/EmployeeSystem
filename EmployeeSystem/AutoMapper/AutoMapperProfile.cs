@@ -22,6 +22,9 @@ namespace DTOs.AutoMapper
 
             CreateMap<EmployeeUser, EmployeeViewModel>()
                 .ForMember(e => e.Department, cfg => cfg.MapFrom(e => e.Department.Name));
+
+            CreateMap<Request, RequestViewModel>()
+                .ForMember(r => r.Name, cfg => cfg.MapFrom(r => $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}"));
         }
     }
 }
