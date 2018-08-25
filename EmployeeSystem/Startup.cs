@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using AutoMapper;
+using DataLayer;
+using DataLayer.Interfaces;
+using DatLayer;
+using DatLayer.Interfaces;
 using EmployeeSystem.Data;
 using EmployeeSystem.Models;
 using EmployeeSystem.Services;
-using DatLayer.Interfaces;
-using DatLayer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using NToastNotify;
 using ServiceLayer.Interfaces;
 using ServiceLayer.Services;
-using Microsoft.AspNetCore.Http;
-using DataLayer.Interfaces;
-using DataLayer;
-using NToastNotify;
 
 namespace EmployeeSystem
 {
@@ -64,6 +61,8 @@ namespace EmployeeSystem
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IReportService, ReportService>();
+
+            services.AddAutoMapper();
 
             services.AddMvc()
                 .AddNToastNotifyToastr(new ToastrOptions()

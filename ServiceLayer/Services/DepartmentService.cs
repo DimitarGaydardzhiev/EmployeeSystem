@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
@@ -12,25 +13,24 @@ namespace ServiceLayer.Services
 {
     public class DepartmentService : BaseService<Department>, IDepartmentService
     {
+        private readonly IMapper mapper;
         private readonly IRepository<EmployeeUser> employeeRepository;
 
         public DepartmentService(
             IRepository<Department> repository,
-            IRepository<EmployeeUser> employeeRepository)
+            IRepository<EmployeeUser> employeeRepository,
+            IMapper mapper)
             : base(repository)
         {
             this.employeeRepository = employeeRepository;
+            this.mapper = mapper;
         }
 
         public IEnumerable<DepartmentViewModel> All()
         {
-            var result = repository.All()
-                .Select(d => new DepartmentViewModel()
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                    EmployeesCount = d.Employees.Count()
-                });
+            var departments = repository.All().Include(d => d.Employees).ToList();
+
+            var result = mapper.Map<List<Department>, List<DepartmentViewModel>>(departments);
 
             return result;
         }
