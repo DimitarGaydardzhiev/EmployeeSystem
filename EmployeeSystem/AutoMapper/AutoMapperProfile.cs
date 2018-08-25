@@ -14,6 +14,11 @@ namespace DTOs.AutoMapper
                 .ForMember(d => d.EmployeesCount, cfg => cfg.MapFrom(c => c.Employees.Count()))
                 .ForMember(d => d.Id, cfg => cfg.MapFrom(c => c.Id))
                 .ForMember(d => d.Name, cfg => cfg.MapFrom(c => c.Name));
+
+            CreateMap<EmployeePosition, PositionViewModel>()
+                .ForMember(d => d.EmployeesCount, cfg => cfg.MapFrom(c => c.Employees.Count()))
+                .ForMember(d => d.Id, cfg => cfg.MapFrom(c => c.Id))
+                .ForMember(d => d.Name, cfg => cfg.MapFrom(c => c.Name));
         }
     }
 }

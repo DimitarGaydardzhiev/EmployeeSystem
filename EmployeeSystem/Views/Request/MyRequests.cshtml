@@ -41,7 +41,8 @@
                         @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
                                {
                                    Id = request.Id,
-                                   ControllerName = "Request"
+                                   ControllerName = "Request",
+                                   IsEnabled = true
                                })
                     }
                     else

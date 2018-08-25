@@ -1,7 +1,9 @@
-﻿using DataLayer;
+﻿using AutoMapper;
+using DataLayer;
 using DataLayer.Interfaces;
 using DatLayer;
 using DbEntities.Models;
+using DTOs.ViewModels;
 using EmployeeSystem.Data;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -41,31 +43,6 @@ namespace EmployeeSystem.Tests.Services
             Assert.Equal(ErrorMessages.HasEmployeesMessage, exception.Message);
         }
 
-        [Fact]
-        public void All_ShouldReturn_All_Positions()
-        {
-            var db = InitContext();
-            var positionService = InitService(db);
-
-            var position = new EmployeePosition()
-            {
-                Id = 1,
-                Employees = new List<EmployeeUser>()
-                {
-                    new EmployeeUser()
-                    {
-                        Id = 1
-                    }
-                }
-            };
-
-            db.AddRange(position);
-            db.SaveChanges();
-
-            var result = positionService.All();
-            result.Should().HaveCount(1);
-        }
-
         private EmployeeSystemContext InitContext()
         {
             var dbOptions = new DbContextOptionsBuilder<EmployeeSystemContext>()
@@ -82,8 +59,8 @@ namespace EmployeeSystem.Tests.Services
             var userResolver = new Mock<UserResolverService>(null, null);
             var positionRepository = new Mock<GenericRepository<EmployeePosition>>(db, Mock.Of<IUserResolver>());
             var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            return new PositionService(positionRepository.Object, employeeUserRepository.Object);
+            
+            return new PositionService(positionRepository.Object, employeeUserRepository.Object, null);
         }
     }
 }

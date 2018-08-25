@@ -14,7 +14,6 @@
                 <th>To</th>
                 <th>Request Type</th>
                 <th>Description</th>
-                <th>Is Approved</th>
                 <th></th>
             </tr>
             @foreach (var request in Model)
@@ -25,7 +24,6 @@
                     <td>@Html.DisplayFor(modelItem => request.To)</td>
                     <td>@Html.DisplayFor(modelItem => request.RequestType)</td>
                     <td>@Html.DisplayFor(modelItem => request.Description)</td>
-                    <td>@Html.DisplayFor(modelItem => request.IsApproved)</td>
                     <td>
                         <form method="post" asp-controller="Request" asp-action="Approve">
                             <input type="hidden" name="requestId" value="@request.Id" />

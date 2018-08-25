@@ -41,30 +41,6 @@ namespace EmployeeSystem.Tests.Services
         }
 
         [Fact]
-        public void AddDepartment_ShouldSuccess_If_Department_WithTheSameName_DoesNotExists()
-        {
-            var db = InitContext();
-            var departmentService = InitService(db);
-
-            var department = new Department()
-            {
-                Id = 2,
-                Name = "Test"
-            };
-
-            db.AddRange(department);
-            db.SaveChanges();
-
-            departmentService.Save(new DepartmentViewModel()
-            {
-                Id = 3,
-                Name = "New Department"
-            });
-
-            db.Departments.Should().HaveCount(2);
-        }
-
-        [Fact]
         public void DeleteDepartment_ShouldThrow_If_HasEmployees()
         {
             var db = InitContext();

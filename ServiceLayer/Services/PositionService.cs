@@ -1,4 +1,5 @@
-﻿using DatLayer.Interfaces;
+﻿using AutoMapper;
+using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -13,24 +14,23 @@ namespace ServiceLayer.Services
     public class PositionService : BaseService<EmployeePosition>, IPositionService
     {
         private readonly IRepository<EmployeeUser> employeeRepository;
+        private readonly IMapper mapper;
 
         public PositionService(
             IRepository<EmployeePosition> repository,
-            IRepository<EmployeeUser> employeeRepository)
+            IRepository<EmployeeUser> employeeRepository,
+            IMapper mapper)
             : base(repository)
         {
             this.employeeRepository = employeeRepository;
+            this.mapper = mapper;
         }
 
         public IEnumerable<PositionViewModel> All()
         {
-            var result = repository.All()
-                .Select(p => new PositionViewModel()
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    EmployeesCount = employeeRepository.All().Where(e => e.EmployeePositionId == p.Id && e.IsActive).Count()
-                });
+            var positions = repository.All().Include(d => d.Employees).ToList();
+
+            var result = mapper.Map<List<EmployeePosition>, List<PositionViewModel>>(positions);
 
             return result;
         }
