@@ -44,7 +44,6 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = "administrator")]
         public IActionResult Save(DepartmentViewModel model)
         {

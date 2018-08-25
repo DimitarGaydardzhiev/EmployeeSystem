@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +49,7 @@ namespace EmployeeSystem
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserResolver, UserResolverService>();
-            
+
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -62,12 +63,15 @@ namespace EmployeeSystem
 
             services.AddAutoMapper();
 
-            services.AddMvc()
-                .AddNToastNotifyToastr(new ToastrOptions()
-                {
-                    ProgressBar = false,
-                    PositionClass = ToastPositions.BottomRight
-                }); ;
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            })
+            .AddNToastNotifyToastr(new ToastrOptions()
+            {
+                ProgressBar = false,
+                PositionClass = ToastPositions.BottomRight
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

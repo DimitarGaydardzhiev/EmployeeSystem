@@ -30,7 +30,6 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
         public IActionResult Add(RequestViewModel model)
         {
             ViewBag.RequestTypes = service.GetRequestTypes();
