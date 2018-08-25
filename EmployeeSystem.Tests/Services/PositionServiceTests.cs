@@ -1,0 +1,90 @@
+﻿using DataLayer;
+using DataLayer.Interfaces;
+using DatLayer;
+using DbEntities.Models;
+using EmployeeSystem.Data;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Moq;
+using ServiceLayer.ErrorUtils;
+using ServiceLayer.Services;
+using System;
+using System.Collections.Generic;
+using Xunit;
+
+namespace EmployeeSystem.Tests.Services
+{
+    public class PositionServiceTests
+    {
+        [Fact]
+        public void DeletePositiont_ShouldThrow_If_HasEmployees()
+        {
+            var db = InitContext();
+
+            var userResolver = new Mock<UserResolverService>(null, null);
+            var positionRepository = new Mock<GenericRepository<EmployeePosition>>(db, Mock.Of<IUserResolver>());
+            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
+
+            var positionService = new PositionService(positionRepository.Object, employeeUserRepository.Object);
+
+            var position = new EmployeePosition()
+            {
+                Id = 1,
+                Employees = new List<EmployeeUser>()
+                {
+                    new EmployeeUser()
+                    {
+                        Id = 1
+                    }
+                }
+            };
+
+            db.AddRange(position);
+            db.SaveChanges();
+
+            var exception = Assert.Throws<InvalidDeleteException>(() => positionService.Delete(1));
+            Assert.Equal(ErrorMessages.HasEmployeesMessage, exception.Message);
+        }
+
+        [Fact]
+        public void All_ShouldReturn_All_Positions()
+        {
+            var db = InitContext();
+
+            var userResolver = new Mock<UserResolverService>(null, null);
+            var positionRepository = new Mock<GenericRepository<EmployeePosition>>(db, Mock.Of<IUserResolver>());
+            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
+
+            var positionService = new PositionService(positionRepository.Object, employeeUserRepository.Object);
+
+            var position = new EmployeePosition()
+            {
+                Id = 1,
+                Employees = new List<EmployeeUser>()
+                {
+                    new EmployeeUser()
+                    {
+                        Id = 1
+                    }
+                }
+            };
+
+            db.AddRange(position);
+            db.SaveChanges();
+
+            var result = positionService.All();
+            result.Should().HaveCount(1);
+        }
+
+        private EmployeeSystemContext InitContext()
+        {
+            var dbOptions = new DbContextOptionsBuilder<EmployeeSystemContext>()
+               .UseInMemoryDatabase(Guid.NewGuid().ToString())
+               .Options;
+
+            var db = new EmployeeSystemContext(dbOptions);
+
+            return db;
+        }
+    }
+}
