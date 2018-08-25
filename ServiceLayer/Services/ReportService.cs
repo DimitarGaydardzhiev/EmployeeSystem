@@ -39,17 +39,19 @@ namespace ServiceLayer.Services
             {
                 case (int)ReportType.EmployeesByPositions:
                     data = GetEmployeesByPosition();
-                    result.Data = JsonConvert.SerializeObject(data);
-                    result.ChartTitle = GetReportName(ReportType.EmployeesByPositions);
                     break;
                 case (int)ReportType.ProjectAssignedEmployees:
                     data = GetProjectAssignedEmployees();
-                    result.Data = JsonConvert.SerializeObject(data);
-                    result.ChartTitle = GetReportName(ReportType.EmployeesByPositions);
                     break;
                 default:
                     result = null;
                     break;
+            }
+
+            if (result != null)
+            {
+                result.Data = JsonConvert.SerializeObject(data);
+                result.ChartTitle = GetReportName(reportTypeId);
             }
 
             return result;
@@ -87,9 +89,9 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        private string GetReportName(ReportType employeesByPositions)
+        private string GetReportName(int type)
         {
-            var name = ReportType.EmployeesByPositions.ToString();
+            var name = ((ReportType)type).ToString();
             FieldInfo fi = (new ReportType()).GetType().GetField(name);
             var attribute = (DescriptionAttribute)fi.GetCustomAttribute(typeof(DescriptionAttribute));
 
