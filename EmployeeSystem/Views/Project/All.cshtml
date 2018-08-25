@@ -12,7 +12,6 @@
             <tr>
                 <th>Name</th>
                 <th>Employees</th>
-                <th>Status</th>
                 @if (User.IsInRole("administrator"))
                 {
                     <th></th>
@@ -30,7 +29,6 @@
                             <br />
                         }
                     </td>
-                    <td>@Html.DisplayFor(modelItem => project.Status)</td>
                     @if (User.IsInRole("administrator"))
                     {
                         <td class="col-md-1">
