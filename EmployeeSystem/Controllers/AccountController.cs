@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using DTOs.ViewModels;
+using EmployeeSystem.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using EmployeeSystem.Models;
-using EmployeeSystem.Models.AccountViewModels;
-using EmployeeSystem.Services;
-using DbEntities.Models;
 using ServiceLayer.Interfaces;
-using DTOs.ViewModels;
+using System.Threading.Tasks;
 
 namespace EmployeeSystem.Controllers
 {

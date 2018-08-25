@@ -17,41 +17,6 @@ namespace EmployeeSystem.Tests.Services
     public class EmployeeServiceTest
     {
         [Fact]
-        public void EmployeeService_All_ShouldReturn_AllActiveEmployees()
-        {
-            var db = InitContext();
-            var employeeService = InitService(db);
-
-            var firstEmployee = new EmployeeUser()
-            {
-                Id = 1,
-                FirstName = "First Employee",
-                IsActive = true
-            };
-
-            var secondEmployee = new EmployeeUser()
-            {
-                Id = 2,
-                FirstName = "Second Employee",
-                IsActive = false
-            };
-
-            var thirdEmployee = new EmployeeUser()
-            {
-                Id = 3,
-                FirstName = "Third Employee",
-                IsActive = true
-            };
-
-            db.AddRange(firstEmployee, secondEmployee, thirdEmployee);
-            db.SaveChanges();
-
-            var result = employeeService.All();
-
-            result.Should().HaveCount(2);
-        }
-
-        [Fact]
         public void Delete_Employee_Should_Set_NotActive()
         {
             var db = InitContext();
@@ -103,7 +68,7 @@ namespace EmployeeSystem.Tests.Services
             var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
             var userManager = new Mock<UserManager<AspUser>>(Mock.Of<IUserStore<AspUser>>(), null, null, null, null, null, null, null, null);
 
-            return new EmployeeService(employeeUserRepository.Object, null, null, null, null, userManager.Object);
+            return new EmployeeService(employeeUserRepository.Object, null, null, null, null, userManager.Object, null);
         }
     }
 }

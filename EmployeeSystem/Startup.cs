@@ -5,7 +5,6 @@ using DatLayer;
 using DatLayer.Interfaces;
 using EmployeeSystem.Data;
 using EmployeeSystem.Models;
-using EmployeeSystem.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -49,8 +48,7 @@ namespace EmployeeSystem
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserResolver, UserResolverService>();
-
-            services.AddScoped<IEmailSender, EmailSender>();
+            
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IPositionService, PositionService>();
             services.AddScoped<IRoleService, RoleService>();

@@ -1,11 +1,11 @@
-﻿using DatLayer.Interfaces;
+﻿using AutoMapper;
+using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
 using EmployeeSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,6 +18,7 @@ namespace ServiceLayer.Services
         private readonly IDepartmentService departmentService;
         private readonly IAccountService accountService;
         private readonly UserManager<AspUser> userManager;
+        private readonly IMapper mapper;
 
         public EmployeeService(
             IRepository<EmployeeUser> repository,
@@ -25,7 +26,8 @@ namespace ServiceLayer.Services
             IPositionService positionService,
             IDepartmentService departmentService,
             IAccountService accountService,
-            UserManager<AspUser> userManager)
+            UserManager<AspUser> userManager,
+            IMapper mapper)
             : base(repository)
         {
             this.roleService = roleService;
@@ -33,6 +35,7 @@ namespace ServiceLayer.Services
             this.departmentService = departmentService;
             this.accountService = accountService;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
         public IEnumerable<EmployeeViewModel> All()
@@ -80,24 +83,11 @@ namespace ServiceLayer.Services
 
         private IEnumerable<EmployeeViewModel> GetEmployees(bool isActive)
         {
-            var result = repository.All()
-                .Include(e => e.Department)
+            var employees = repository.All().Include(e => e.Department)
                 .Where(e => e.IsActive == isActive)
-                .Select(e => new EmployeeViewModel()
-                {
-                    Id = e.Id,
-                    FirstName = e.FirstName,
-                    LastName = e.LastName,
-                    DateOfBirth = e.Birthday,
-                    Description = e.PersonalDescription,
-                    StartingDate = e.InCompanyFrom,
-                    InCompanyTo = e.InCompanyTo,
-                    Department = e.Department.Name,
-                    Position = e.EmployeePosition.Name,
-                    IsActive = e.IsActive
-                });
+                .ToList();
 
-            return result;
+            return mapper.Map<List<EmployeeUser>, List<EmployeeViewModel>>(employees);
         }
     }
 }

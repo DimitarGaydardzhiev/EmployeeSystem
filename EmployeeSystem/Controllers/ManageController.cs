@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using EmployeeSystem.Models;
+using EmployeeSystem.Models.ManageViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using EmployeeSystem.Models;
-using EmployeeSystem.Models.ManageViewModels;
-using EmployeeSystem.Services;
+using System;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 
 namespace EmployeeSystem.Controllers
 {
@@ -22,7 +18,6 @@ namespace EmployeeSystem.Controllers
     {
         private readonly UserManager<AspUser> _userManager;
         private readonly SignInManager<AspUser> _signInManager;
-        private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
 
@@ -32,13 +27,11 @@ namespace EmployeeSystem.Controllers
         public ManageController(
           UserManager<AspUser> userManager,
           SignInManager<AspUser> signInManager,
-          IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
         }
