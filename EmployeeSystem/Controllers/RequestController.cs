@@ -3,6 +3,7 @@ using DTOs.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 using ServiceLayer.Utils;
 using System;
@@ -22,6 +23,21 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpGet]
+        public IActionResult Edit(RequestViewModel model)
+        {
+            ViewBag.RequestTypes = service.GetRequestTypes();
+            bool canEdit = service.CanEdit(model);
+
+            if (!canEdit)
+            {
+                ShowNotification(ErrorMessages.CanNotEditAnotherUserRequest, ToastrSeverity.Error);
+                return View("Add", model);
+            }
+
+            return View("Add", model);
+        }
+
+        [HttpGet]
         public IActionResult Add()
         {
             ViewBag.RequestTypes = service.GetRequestTypes();
@@ -30,14 +46,15 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(RequestViewModel model)
+        public IActionResult Save(RequestViewModel model)
         {
+            ModelState.Remove("Id");
             ViewBag.RequestTypes = service.GetRequestTypes();
             if (ModelState.IsValid)
             {
                 try
                 {
-                    service.Add(model);
+                    service.Save(model);
                 }
                 catch (Exception e)
                 {

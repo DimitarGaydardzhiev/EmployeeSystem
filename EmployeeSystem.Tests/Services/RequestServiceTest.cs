@@ -73,7 +73,7 @@ namespace EmployeeSystem.Tests.Services
 
             db.SaveChanges();
 
-            var exception = Assert.Throws<Exception>(() => requestService.Add(new RequestViewModel()
+            var exception = Assert.Throws<Exception>(() => requestService.Save(new RequestViewModel()
             {
                 Name = "First",
                 From = DateTime.Now.Date,

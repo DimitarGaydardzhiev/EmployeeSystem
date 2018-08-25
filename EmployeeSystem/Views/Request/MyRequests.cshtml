@@ -35,8 +35,8 @@
                     <td>@Html.DisplayFor(modelItem => request.Description)</td>
                     @if (!request.IsApproved)
                     {
-                        <td>
-                            <button type="submit" class="btn btn-success">Edit</button>
+                        <td class="col-md-1">
+                            @Html.ActionLink("Edit", "Edit", request, new { @class = "btn btn-warning" })
                         </td>
                         @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
                                {

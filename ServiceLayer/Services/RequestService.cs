@@ -32,7 +32,7 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        public void Add(RequestViewModel model)
+        public void Save(RequestViewModel model)
         {
             var userId = repository.UserId;
 
@@ -40,41 +40,27 @@ namespace ServiceLayer.Services
                 .All()
                 .FirstOrDefault(r => r.EmployeeUserId == userId &&
                                     (r.From >= model.From && model.From <= model.To));
-            
+
             if (request != null)
                 throw new Exception(ErrorMessages.ThereIsAlreadyRequestForTheseDatesMessage);
 
-            var newRequest = new Request()
-            {
-                EmployeeUserId = userId,
-                From = model.From,
-                To = model.To,
-                RequestTypeId = model.RequestTypeId,
-                Description = model.Description,
-                IsApproved = false
-            };
+            var result = repository.FindOrCreate(model.Id);
 
-            repository.Add(newRequest);
-            repository.SaveChanges();
+            if (!CanEdit(model))
+                throw new Exception(ErrorMessages.CanNotEditAnotherUserRequest);
+
+            result.EmployeeUserId = userId;
+            result.From = model.From;
+            result.To = model.To;
+            result.RequestTypeId = model.RequestTypeId;
+            result.Description = model.Description;
+            result.IsApproved = false;
+
+            repository.Save(result);
         }
 
         public IEnumerable<RequestViewModel> GetMyRequests()
         {
-            //var result = repository
-            //    .All()
-            //    .Where(r => r.EmployeeUserId == repository.UserId)
-            //    .Include(r => r.RequestType)
-            //    .Select(r => new RequestViewModel()
-            //    {
-            //        Id = r.Id,
-            //        Description = r.Description,
-            //        From = r.From,
-            //        To = r.To,
-            //        RequestType = r.RequestType.Name,
-            //        IsApproved = r.IsApproved
-            //    });
-
-            //return result;
             var requests = repository.All()
                 .Include(r => r.EmployeeUser)
                 .Include(r => r.RequestType)
@@ -86,7 +72,6 @@ namespace ServiceLayer.Services
 
         public IEnumerable<RequestViewModel> GetPendingRequests()
         {
-            // TODO: Get requests for employees by mnanager
             var result = GetRequests(false);
             return result;
         }
@@ -109,21 +94,6 @@ namespace ServiceLayer.Services
 
         private IEnumerable<RequestViewModel> GetRequests(bool isApproved)
         {
-            //var result = repository.All()
-            //    .Include(r => r.EmployeeUser)
-            //    .Include(r => r.RequestType)
-            //    .Where(r => r.IsApproved == isApproved)
-            //    .Select(r => new RequestViewModel()
-            //    {
-            //        Id = r.Id,
-            //        User = $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}",
-            //        From = r.From,
-            //        To = r.To,
-            //        RequestType = r.RequestType.Name,
-            //        Description = r.Description,
-            //        IsApproved = r.IsApproved
-            //    });
-
             var requests = repository.All()
                 .Include(r => r.EmployeeUser)
                 .Include(r => r.RequestType)
@@ -156,6 +126,17 @@ namespace ServiceLayer.Services
                 throw new InvalidDeleteException(ErrorMessages.ConNotDeleteApprovedRequestMessage);
 
             base.Delete(id);
+        }
+
+        public bool CanEdit(RequestViewModel model)
+        {
+            var userId = repository.UserId;
+            var request = repository.Find(model.Id);
+
+            if (request != null && request.EmployeeUserId != userId)
+                return false;
+
+            return true;
         }
     }
 }

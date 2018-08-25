@@ -13,12 +13,14 @@ namespace ServiceLayer.Interfaces
 
         IEnumerable<RequestViewModel> GetApprovedRequests();
 
-        void Add(RequestViewModel model);
+        void Save(RequestViewModel model);
 
         void ApproveRequest(int requestId);
 
         void UnapproveRequest(int requestId);
 
         void Delete(int id);
+
+        bool CanEdit(RequestViewModel model);
     }
 }

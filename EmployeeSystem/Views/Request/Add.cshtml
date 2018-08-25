@@ -1,14 +1,14 @@
 ﻿@model RequestViewModel
 
 @{
-    ViewData["Title"] = "Create New Request";
+    ViewData["Title"] = "Request Management";
 }
 
 <h2>@ViewData["Title"]</h2>
 
 <div class="row">
     <div class="col-md-12">
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" asp-controller="Request" asp-action="Save">
             <hr />
             <div class="form-group col-md-3">
                 @Html.LabelFor(model => model.From)
@@ -27,6 +27,7 @@
             <div class="form-group col-md-9">
                 <textarea asp-for="Description" rows="5" style="width: 100%; border-radius: 5px;" placeholder="Description ..."></textarea>
             </div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group col-md-6">
                 <button type="submit" class="btn btn-default">Create</button>
             </div>

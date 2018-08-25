@@ -25,7 +25,8 @@ namespace DTOs.AutoMapper
                 .ForMember(e => e.Department, cfg => cfg.MapFrom(e => e.Department.Name));
 
             CreateMap<Request, RequestViewModel>()
-                .ForMember(r => r.User, cfg => cfg.MapFrom(r => $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}"));
+                .ForMember(r => r.User, cfg => cfg.MapFrom(r => $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}"))
+                .ForMember(r => r.RequestType, cfg => cfg.MapFrom(r => r.RequestType.Name));
 
             CreateMap<IdentityRole, RoleViewModel>();
 
