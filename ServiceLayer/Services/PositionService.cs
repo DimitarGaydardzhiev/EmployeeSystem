@@ -1,8 +1,6 @@
 ﻿using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.InputModels;
 using DTOs.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
@@ -37,18 +35,21 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        public void Add(PositionInputModel model)
+        public void Save(PositionViewModel model)
         {
             var position = repository.All().FirstOrDefault(p => p.Name == model.Name);
+
             if (position != null)
                 throw new Exception(ErrorMessages.ObjectAlreadyAddedMessage);
 
-            position = new EmployeePosition()
-            {
-                Name = model.Name
-            };
+            var result = repository.FindOrCreate(model.Id);
 
-            repository.Save(position);
+            if (result.Employees.Count() > 0)
+                throw new Exception(ErrorMessages.UnableToEditPositionWithEmployeesMessage);
+
+            result.Name = model.Name;
+
+            repository.Save(result);
         }
 
         public override void Delete(int id)

@@ -24,14 +24,30 @@
                         <td>@Html.DisplayFor(modelItem => department.EmployeesCount)</td>
                         @if (User.IsInRole("administrator"))
                         {
-                            <td class="col-md-1">
-                                @Html.ActionLink("Edit", "Edit", new DepartmentViewModel() { Id = department.Id, Name = department.Name }, new { @class = "btn btn-success" })
-                            </td>
-                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                            @if (department.EmployeesCount == 0)
                             {
-                                Id = department.Id,
-                                ControllerName = "Department"
-                            })
+                                <td class="col-md-1">
+                                    @Html.ActionLink("Edit", "Edit", new DepartmentViewModel() { Id = department.Id, Name = department.Name }, new { @class = "btn btn-warning" })
+                                </td>
+                                @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                               {
+                                   Id = department.Id,
+                                   ControllerName = "Department",
+                                   IsEnabled = true
+                               })
+                            }
+                            else
+                            {
+                                <td class="col-md-1">
+                                    <a asp-area="" class="btn btn-warning disabled" role="button">Edit</a>
+                                </td>
+                                @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                               {
+                                   Id = department.Id,
+                                   ControllerName = "Department",
+                                   IsEnabled = false
+                               })
+                            }
                         }
                     </tr>
                 }

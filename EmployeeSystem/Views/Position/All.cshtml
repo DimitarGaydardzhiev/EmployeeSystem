@@ -13,20 +13,41 @@
                 <th>Position</th>
                 <th>Employees Count</th>
                 <th></th>
+                <th></th>
             </tr>
             @foreach (var position in Model)
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => position.Name)</td>
                     <td>@Html.DisplayFor(modelItem => position.EmployeesCount)</td>
-                    @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                    @if (position.EmployeesCount == 0)
+                    {
+                        <td class="col-md-1">
+                            @Html.ActionLink("Edit", "Edit", new PositionViewModel() { Id = position.Id, Name = position.Name }, new { @class = "btn btn-warning" })
+                        </td>
+                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
                        {
                            Id = position.Id,
-                           ControllerName = "Position"
+                           ControllerName = "Position",
+                           IsEnabled = true
                        })
+                    }
+                    else
+                    {
+                        <td class="col-md-1">
+                            <a asp-area="" class="btn btn-warning disabled" role="button">Edit</a>
+                        </td>
+                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                       {
+                           Id = position.Id,
+                           ControllerName = "Position",
+                           IsEnabled = false
+                       })
+                    }
                 </tr>
             }
         </table>
+
     </div>
     <div class="text-right">
         @Html.ActionLink("Add Position", "Add", "Position", null, new Dictionary<string, object>

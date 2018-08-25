@@ -1,6 +1,4 @@
-﻿using DTOs.InputModels;
-using DTOs.ViewModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using DTOs.ViewModels;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
@@ -9,7 +7,7 @@ namespace ServiceLayer.Interfaces
     {
         IEnumerable<PositionViewModel> All();
 
-        void Add(PositionInputModel model);
+        void Save(PositionViewModel model);
 
         void Delete(int id);
     }

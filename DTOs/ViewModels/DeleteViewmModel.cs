@@ -7,5 +7,7 @@
         public string ButtonName { get; set; } = "Delete";
 
         public string ControllerName { get; set; }
+
+        public bool IsEnabled { get; set; }
     }
 }

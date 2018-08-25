@@ -103,15 +103,6 @@
     border-radius: 10px;
 }
 
-/*.admin-panel {
-    width: 70%;
-    height: 700px;
-    border: 1px solid;
-    padding: 10px;
-    box-shadow: 5px 10px #888888;
-    border-radius: 10px;
-}*/
-
 .admin-link {
     background-color: #234d20;
     border-radius: 10px;
@@ -122,10 +113,15 @@
         color: black !important;
     }
 
-.admin-link a {
-    color: white !important;
-}
+    .admin-link a {
+        color: white !important;
+    }
 
 .float-right {
     float: right !important;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
