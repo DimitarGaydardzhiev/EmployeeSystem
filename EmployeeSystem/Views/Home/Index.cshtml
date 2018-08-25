@@ -7,7 +7,6 @@
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -55,9 +54,12 @@
             <li>
                 <a asp-area="" asp-controller="Employee" asp-action="All" class="btn btn-link">List of employees</a>
             </li>
-            <li>
-                <a asp-area="" asp-controller="Employee" asp-action="Add" class="btn btn-link">Add</a>
-            </li>
+            @if (User.IsInRole("administrator"))
+            {
+                <li>
+                    <a asp-area="" asp-controller="Employee" asp-action="Add" class="btn btn-link">Add</a>
+                </li>
+            }
         </ul>
     </div>
     <div class="col-md-4">
@@ -66,9 +68,12 @@
             <li>
                 <a asp-area="" asp-controller="Project" asp-action="All" class="btn btn-link">All company projects</a>
             </li>
-            <li>
-                <a asp-area="" asp-controller="Project" asp-action="Add" class="btn btn-link">Add</a>
-            </li>
+            @if (User.IsInRole("administrator"))
+            {
+                <li>
+                    <a asp-area="" asp-controller="Project" asp-action="Add" class="btn btn-link">Add</a>
+                </li>
+            }
         </ul>
     </div>
     <div class="col-md-4">

@@ -34,6 +34,7 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "administrator")]
         public IActionResult Add()
         {
             ViewBag.Roles = service.GetRoles();

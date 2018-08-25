@@ -20,7 +20,10 @@
                 }
                 <th>Department</th>
                 <th>Description</th>
-                <th></th>
+                @if (User.IsInRole("administrator"))
+                {
+                    <th></th>
+                }
             </tr>
             @if (Model != null)
             {
@@ -37,7 +40,7 @@
                         }
                         <td>@Html.DisplayFor(modelItem => employee.Department)</td>
                         <td>@Html.DisplayFor(modelItem => employee.Description)</td>
-                        @if (areCurrent)
+                        @if (areCurrent && User.IsInRole("administrator"))
                         {
                             @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
                                {

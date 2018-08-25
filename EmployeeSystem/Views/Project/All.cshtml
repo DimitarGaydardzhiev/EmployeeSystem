@@ -13,8 +13,11 @@
                 <th>Name</th>
                 <th>Employees</th>
                 <th>Status</th>
-                <th></th>
-                <th></th>
+                @if (User.IsInRole("administrator"))
+                {
+                    <th></th>
+                    <th></th>
+                }
             </tr>
             @foreach (var project in Model)
             {
@@ -27,9 +30,9 @@
                             <br />
                         }
                     </td>
+                    <td>@Html.DisplayFor(modelItem => project.Status)</td>
                     @if (User.IsInRole("administrator"))
                     {
-                        <td>@Html.DisplayFor(modelItem => project.Status)</td>
                         <td class="col-md-1">
                             @Html.ActionLink("Edit", "Edit", project, new { @class = "btn btn-warning" })
                         </td>

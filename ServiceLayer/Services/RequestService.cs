@@ -46,7 +46,7 @@ namespace ServiceLayer.Services
 
             var result = repository.FindOrCreate(model.Id);
 
-            if (!CanEdit(model))
+            if (!CanEdit(model.Id))
                 throw new Exception(ErrorMessages.CanNotEditAnotherUserRequest);
 
             result.EmployeeUserId = userId;
@@ -128,10 +128,10 @@ namespace ServiceLayer.Services
             base.Delete(id);
         }
 
-        public bool CanEdit(RequestViewModel model)
+        public bool CanEdit(int id)
         {
             var userId = repository.UserId;
-            var request = repository.Find(model.Id);
+            var request = repository.Find(id);
 
             if (request != null && request.EmployeeUserId != userId)
                 return false;

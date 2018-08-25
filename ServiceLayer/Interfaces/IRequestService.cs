@@ -21,6 +21,6 @@ namespace ServiceLayer.Interfaces
 
         void Delete(int id);
 
-        bool CanEdit(RequestViewModel model);
+        bool CanEdit(int id);
     }
 }

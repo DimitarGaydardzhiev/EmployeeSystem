@@ -12,8 +12,11 @@
             <tr>
                 <th>Name</th>
                 <th>Employees Count</th>
-                <th></th>
-                <th></th>
+                @if (User.IsInRole("administrator"))
+                {
+                    <th></th>
+                    <th></th>
+                }
             </tr>
             @if (Model != null)
             {

@@ -26,7 +26,7 @@ namespace EmployeeSystem.Controllers
         public IActionResult Edit(RequestViewModel model)
         {
             ViewBag.RequestTypes = service.GetRequestTypes();
-            bool canEdit = service.CanEdit(model);
+            bool canEdit = service.CanEdit(model.Id);
 
             if (!canEdit)
             {
@@ -108,11 +108,17 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "administrator")]
         public IActionResult Delete(int id)
         {
             if (id == 0)
                 return this.BadRequest();
+
+            bool canEdit = service.CanEdit(id);
+            if (!canEdit)
+            {
+                ShowNotification(ErrorMessages.CanNotEditAnotherUserRequest, ToastrSeverity.Error);
+                return RedirectToAction("MyRequests", null);
+            }
 
             try
             {
