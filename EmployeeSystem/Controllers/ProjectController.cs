@@ -77,5 +77,25 @@ namespace EmployeeSystem.Controllers
             var result = service.GetUserProjects();
             return View(result);
         }
+
+        [HttpPost]
+        [Authorize(Roles = "administrator")]
+        public IActionResult Delete(int id)
+        {
+            if (id == 0)
+                return this.BadRequest();
+
+            try
+            {
+                service.Delete(id);
+                ShowNotification(SuccessMessages.SuccesslDelete, ToastrSeverity.Success);
+                return RedirectToAction("All", null);
+            }
+            catch (Exception ex)
+            {
+                ShowNotification(ex.Message, ToastrSeverity.Error);
+                return RedirectToAction("All", null);
+            }
+        }
     }
 }

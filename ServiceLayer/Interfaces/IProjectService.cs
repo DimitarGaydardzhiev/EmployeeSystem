@@ -12,5 +12,7 @@ namespace ServiceLayer.Interfaces
         void Save(ProjectViewModel model);
 
         IEnumerable<ProjectViewModel> GetUserProjects();
+
+        void Delete(int id);
     }
 }
