@@ -1,4 +1,5 @@
-﻿using DatLayer.Interfaces;
+﻿using AutoMapper;
+using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
 using ServiceLayer.Interfaces;

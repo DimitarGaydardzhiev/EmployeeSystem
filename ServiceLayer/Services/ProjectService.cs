@@ -1,4 +1,5 @@
-﻿using DatLayer.Interfaces;
+﻿using AutoMapper;
+using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,6 @@ using ServiceLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ServiceLayer.Services
 {
@@ -15,15 +15,18 @@ namespace ServiceLayer.Services
     {
         private readonly IEmployeeService employeeService;
         private readonly IRepository<EmployeeUserProject> employeeUserProjectRepository;
+        private readonly IMapper mapper;
 
         public ProjectService(
             IRepository<Project> repository,
             IEmployeeService employeeService,
-            IRepository<EmployeeUserProject> employeeUserProjectRepository)
+            IRepository<EmployeeUserProject> employeeUserProjectRepository,
+            IMapper mapper)
             : base(repository)
         {
             this.employeeService = employeeService;
             this.employeeUserProjectRepository = employeeUserProjectRepository;
+            this.mapper = mapper;
         }
 
         public IEnumerable<ProjectViewModel> GetCompanyProjects()
@@ -108,20 +111,27 @@ namespace ServiceLayer.Services
 
         public IEnumerable<ProjectViewModel> GetUserProjects()
         {
+            //var userId = repository.UserId;
+
+            //var result = repository.All()
+            //    .Where(p => p.EmployeeUserProjects.Any(eup => eup.EmployeeUserId == userId))
+            //    .Select(p => new ProjectViewModel()
+            //    {
+            //        Name = p.Name,
+            //        Status = p.Status.ToString(),
+            //        StartDate = p.StartDate,
+            //        EndDate = p.EndDate,
+            //        Description = p.Description
+            //    });
+
+            //return result;
             var userId = repository.UserId;
 
-            var result = repository.All()
+            var projects = repository.All().Include(p => p.EmployeeUserProjects)
                 .Where(p => p.EmployeeUserProjects.Any(eup => eup.EmployeeUserId == userId))
-                .Select(p => new ProjectViewModel()
-                {
-                    Name = p.Name,
-                    Status = p.Status.ToString(),
-                    StartDate = p.StartDate,
-                    EndDate = p.EndDate,
-                    Description = p.Description
-                });
+                .ToList();
 
-            return result;
+            return mapper.Map<List<Project>, List<ProjectViewModel>>(projects);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DbEntities.Models;
 using DTOs.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using System.Linq;
 
 namespace DTOs.AutoMapper
@@ -24,7 +25,11 @@ namespace DTOs.AutoMapper
                 .ForMember(e => e.Department, cfg => cfg.MapFrom(e => e.Department.Name));
 
             CreateMap<Request, RequestViewModel>()
-                .ForMember(r => r.Name, cfg => cfg.MapFrom(r => $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}"));
+                .ForMember(r => r.User, cfg => cfg.MapFrom(r => $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}"));
+
+            CreateMap<IdentityRole, RoleViewModel>();
+
+            CreateMap<Project, ProjectViewModel>();
         }
     }
 }
