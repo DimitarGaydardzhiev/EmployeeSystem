@@ -21,12 +21,7 @@ namespace EmployeeSystem.Tests.Services
         public void AddDepartment_ShouldThrow_If_Department_WithTheSmaeName_AlreadyExists()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var departmentRepository = new Mock<GenericRepository<Department>>(db, Mock.Of<IUserResolver>());
-            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            var departmentService = new DepartmentService(departmentRepository.Object, employeeUserRepository.Object);
+            var departmentService = InitService(db);
 
             var department = new Department()
             {
@@ -49,12 +44,7 @@ namespace EmployeeSystem.Tests.Services
         public void AddDepartment_ShouldSuccess_If_Department_WithTheSameName_DoesNotExists()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var departmentRepository = new Mock<GenericRepository<Department>>(db, Mock.Of<IUserResolver>());
-            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            var departmentService = new DepartmentService(departmentRepository.Object, employeeUserRepository.Object);
+            var departmentService = InitService(db);
 
             var department = new Department()
             {
@@ -78,12 +68,7 @@ namespace EmployeeSystem.Tests.Services
         public void DeleteDepartment_ShouldThrow_If_HasEmployees()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var departmentRepository = new Mock<GenericRepository<Department>>(db, Mock.Of<IUserResolver>());
-            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            var departmentService = new DepartmentService(departmentRepository.Object, employeeUserRepository.Object);
+            var departmentService = InitService(db);
 
             var department = new Department()
             {
@@ -108,12 +93,7 @@ namespace EmployeeSystem.Tests.Services
         public void DeleteRequest_Should_Be_Successfulls()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var departmentRepository = new Mock<GenericRepository<Department>>(db, Mock.Of<IUserResolver>());
-            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            var departmentService = new DepartmentService(departmentRepository.Object, employeeUserRepository.Object);
+            var departmentService = InitService(db);
 
             var department1 = new Department()
             {
@@ -147,6 +127,15 @@ namespace EmployeeSystem.Tests.Services
             var db = new EmployeeSystemContext(dbOptions);
 
             return db;
+        }
+
+        private DepartmentService InitService(EmployeeSystemContext db)
+        {
+            var userResolver = new Mock<UserResolverService>(null, null);
+            var departmentRepository = new Mock<GenericRepository<Department>>(db, Mock.Of<IUserResolver>());
+            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
+
+            return new DepartmentService(departmentRepository.Object, employeeUserRepository.Object, null);
         }
     }
 }

@@ -20,12 +20,7 @@ namespace EmployeeSystem.Tests.Services
         public void DeletePositiont_ShouldThrow_If_HasEmployees()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var positionRepository = new Mock<GenericRepository<EmployeePosition>>(db, Mock.Of<IUserResolver>());
-            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            var positionService = new PositionService(positionRepository.Object, employeeUserRepository.Object);
+            var positionService = InitService(db);
 
             var position = new EmployeePosition()
             {
@@ -50,12 +45,7 @@ namespace EmployeeSystem.Tests.Services
         public void All_ShouldReturn_All_Positions()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var positionRepository = new Mock<GenericRepository<EmployeePosition>>(db, Mock.Of<IUserResolver>());
-            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
-
-            var positionService = new PositionService(positionRepository.Object, employeeUserRepository.Object);
+            var positionService = InitService(db);
 
             var position = new EmployeePosition()
             {
@@ -85,6 +75,15 @@ namespace EmployeeSystem.Tests.Services
             var db = new EmployeeSystemContext(dbOptions);
 
             return db;
+        }
+
+        private PositionService InitService(EmployeeSystemContext db)
+        {
+            var userResolver = new Mock<UserResolverService>(null, null);
+            var positionRepository = new Mock<GenericRepository<EmployeePosition>>(db, Mock.Of<IUserResolver>());
+            var employeeUserRepository = new Mock<GenericRepository<EmployeeUser>>(db, Mock.Of<IUserResolver>());
+
+            return new PositionService(positionRepository.Object, employeeUserRepository.Object);
         }
     }
 }

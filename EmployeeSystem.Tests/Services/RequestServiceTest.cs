@@ -21,12 +21,7 @@ namespace EmployeeSystem.Tests.Services
         public void DeleteRequest_Should_Be_Successfulls()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var requestRepository = new Mock<GenericRepository<Request>>(db, Mock.Of<IUserResolver>());
-            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
-
-            var requestService = new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>());
+            var requestService = InitService(db);
 
             var request1 = new Request()
             {
@@ -58,12 +53,7 @@ namespace EmployeeSystem.Tests.Services
         public void Request_ForSameDates_ShouldThrow_Exception()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var requestRepository = new Mock<GenericRepository<Request>>(db, Mock.Of<IUserResolver>());
-            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
-
-            var requestService = new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>());
+            var requestService = InitService(db);
 
             var request1 = new Request()
             {
@@ -96,12 +86,7 @@ namespace EmployeeSystem.Tests.Services
         public void ApproveRequest_ShouldThrow_Exception_IfNoRequestFound()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var requestRepository = new Mock<GenericRepository<Request>>(db, Mock.Of<IUserResolver>());
-            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
-
-            var requestService = new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>());
+            var requestService = InitService(db);
 
             var request1 = new Request()
             {
@@ -121,12 +106,7 @@ namespace EmployeeSystem.Tests.Services
         public void DeleteRequest_ShouldThrow_If_Approved()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var requestRepository = new Mock<GenericRepository<Request>>(db, Mock.Of<IUserResolver>());
-            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
-
-            var requestService = new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>());
+            var requestService = InitService(db);
 
             var request = new Request()
             {
@@ -150,6 +130,15 @@ namespace EmployeeSystem.Tests.Services
             var db = new EmployeeSystemContext(dbOptions);
 
             return db;
+        }
+
+        private RequestService InitService(EmployeeSystemContext db)
+        {
+            var userResolver = new Mock<UserResolverService>(null, null);
+            var requestRepository = new Mock<GenericRepository<Request>>(db, Mock.Of<IUserResolver>());
+            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
+
+            return new RequestService(requestRepository.Object, Mock.Of<IRequestTypeService>());
         }
     }
 }

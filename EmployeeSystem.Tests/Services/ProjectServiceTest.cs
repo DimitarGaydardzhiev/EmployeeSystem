@@ -21,12 +21,7 @@ namespace EmployeeSystem.Tests.Services
         public void GetCompanyProjects_ShouldReturn_AllProjects_WithActiveEmployeesCount()
         {
             var db = InitContext();
-
-            var userResolver = new Mock<UserResolverService>(null, null);
-            var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
-            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
-
-            var projectService = new ProjectService(projectRepository.Object, Mock.Of<IEmployeeService>(), employeeUserProjectRepository.Object);
+            var projectService = InitService(db);
 
             var employeeUserProject1 = new EmployeeUserProject()
             {
@@ -96,10 +91,7 @@ namespace EmployeeSystem.Tests.Services
         public void GetCompanyProjects_ShouldReturn_AllProjects()
         {
             var db = InitContext();
-
-            var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
-
-            var projectService = new ProjectService(projectRepository.Object, null, null);
+            var projectService = InitService(db);
 
             var firstProject = new Project();
             var secondProject = new Project();
@@ -116,10 +108,7 @@ namespace EmployeeSystem.Tests.Services
         public void Add_Project_ShouldThrowException_IfProjectAlreadyExists()
         {
             var db = InitContext();
-
-            var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
-
-            var projectService = new ProjectService(projectRepository.Object, null, null);
+            var projectService = InitService(db);
 
             var firstProject = new Project() { Name = "First" };
             var secondProject = new Project() { Name = "Second" }; ;
@@ -143,6 +132,15 @@ namespace EmployeeSystem.Tests.Services
             var db = new EmployeeSystemContext(dbOptions);
 
             return db;
+        }
+
+        private ProjectService InitService(EmployeeSystemContext db)
+        {
+            var userResolver = new Mock<UserResolverService>(null, null);
+            var projectRepository = new Mock<GenericRepository<Project>>(db, Mock.Of<IUserResolver>());
+            var employeeUserProjectRepository = new Mock<GenericRepository<EmployeeUserProject>>(db, Mock.Of<IUserResolver>());
+
+            return new ProjectService(projectRepository.Object, Mock.Of<IEmployeeService>(), employeeUserProjectRepository.Object);
         }
     }
 }
