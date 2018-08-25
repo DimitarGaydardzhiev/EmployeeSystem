@@ -32,7 +32,7 @@ namespace EmployeeSystem.Tests.Services
             db.AddRange(department);
             db.SaveChanges();
 
-            var exception = Assert.Throws<Exception>(() => departmentService.Add(new DepartmentViewModel()
+            var exception = Assert.Throws<Exception>(() => departmentService.Save(new DepartmentViewModel()
             {
                 Name = "Test"
             }));
@@ -55,7 +55,7 @@ namespace EmployeeSystem.Tests.Services
             db.AddRange(department);
             db.SaveChanges();
 
-            departmentService.Add(new DepartmentViewModel()
+            departmentService.Save(new DepartmentViewModel()
             {
                 Id = 3,
                 Name = "New Department"

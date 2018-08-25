@@ -35,7 +35,7 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        public void Add(DepartmentViewModel model)
+        public void Save(DepartmentViewModel model)
         {
             var department = repository.All()
                 .FirstOrDefault(d => d.Name == model.Name);
@@ -43,13 +43,10 @@ namespace ServiceLayer.Services
             if (department != null)
                 throw new Exception(ErrorMessages.ObjectAlreadyAddedMessage);
 
-            var result = new Department()
-            {
-                Name = model.Name
-            };
+            var result = repository.FindOrCreate(model.Id);
+            result.Name = model.Name;
 
-            repository.Add(result);
-            repository.SaveChanges();
+            repository.Save(result);
         }
 
         public override void Delete(int id)

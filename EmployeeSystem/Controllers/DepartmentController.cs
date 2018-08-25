@@ -30,21 +30,30 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "administrator")]
         public IActionResult Add()
         {
             return View();
         }
 
+        [HttpGet]
+        [Authorize(Roles = "administrator")]
+        public IActionResult Edit(DepartmentViewModel model)
+        {
+            return View("Add", model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "administrator")]
-        public IActionResult Add(DepartmentViewModel model)
+        public IActionResult Save(DepartmentViewModel model)
         {
+            ModelState.Remove("Id");
             if (ModelState.IsValid)
             {
                 try
                 {
-                    service.Add(model);
+                    service.Save(model);
                 }
                 catch (Exception e)
                 {
