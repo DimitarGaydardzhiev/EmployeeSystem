@@ -23,7 +23,7 @@
                     @if (position.EmployeesCount == 0)
                     {
                         <td class="col-md-1">
-                            @Html.ActionLink("Edit", "Edit", new PositionViewModel() { Id = position.Id, Name = position.Name }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Edit", "Edit", position, new { @class = "btn btn-warning" })
                         </td>
                         @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
                        {

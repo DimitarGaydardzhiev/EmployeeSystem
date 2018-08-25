@@ -27,7 +27,7 @@
                             @if (department.EmployeesCount == 0)
                             {
                                 <td class="col-md-1">
-                                    @Html.ActionLink("Edit", "Edit", new DepartmentViewModel() { Id = department.Id, Name = department.Name }, new { @class = "btn btn-warning" })
+                                    @Html.ActionLink("Edit", "Edit", department, new { @class = "btn btn-warning" })
                                 </td>
                                 @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
                                {

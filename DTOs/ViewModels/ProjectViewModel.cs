@@ -4,17 +4,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.ViewModels
 {
-    public class ProjectViewModel
+    public class ProjectViewModel : BaseViewModel
     {
         [Required]
-        public string Name { get; set; }
+        public override string Name { get; set; }
 
         public List<MultiSelectViewModel> Employees { get; set; }
 
         public string Status { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "Start Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
+        [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
         [MaxLength(500)]

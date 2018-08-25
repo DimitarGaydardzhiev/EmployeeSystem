@@ -116,7 +116,7 @@ namespace EmployeeSystem.Tests.Services
             db.AddRange(firstProject, secondProject);
             db.SaveChanges();
 
-            var exception = Assert.Throws<Exception>(() => projectService.Add(new ProjectViewModel()
+            var exception = Assert.Throws<Exception>(() => projectService.Save(new ProjectViewModel()
             {
                 Name = "First"
             }));

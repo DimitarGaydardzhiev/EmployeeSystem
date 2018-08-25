@@ -41,6 +41,7 @@ namespace ServiceLayer.Services
                          Name = $"{eup.EmployeeUser.FirstName} {eup.EmployeeUser.LastName}"
                      })
                      .ToList(),
+                     Id = p.Id,
                      Name = p.Name,
                      StartDate = p.StartDate,
                      EndDate = p.EndDate,
@@ -64,37 +65,45 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        public void Add(ProjectViewModel model)
+        public void Save(ProjectViewModel model)
         {
             var project = repository.All()
                 .FirstOrDefault(p => p.Name == model.Name);
 
-            if (project != null)
+            if (project != null && model.Id == 0)
                 throw new Exception(ErrorMessages.ObjectAlreadyAddedMessage);
 
-            var result = new Project()
-            {
-                Name = model.Name,
-                ProjectStatusId = (int)DTOs.ProjectStatus.NotStarted,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate
-            };
+            var result = repository.FindOrCreate(model.Id);
+            result.Name = model.Name;
+            result.ProjectStatusId = (int)DTOs.ProjectStatus.NotStarted;
+            result.StartDate = model.StartDate;
+            result.EndDate = model.EndDate;
 
             var projectId = repository.Save(result);
 
-            model.Employees.ForEach(e =>
-            {
-                var employeeUserProject = new EmployeeUserProject()
-                {
-                    EmployeeUserId = e.Id,
-                    ProjectId = projectId
-                };
+            var listEup = new List<EmployeeUserProject>();
 
-                employeeUserProjectRepository.Add(employeeUserProject);
-            });
+            var employeeUserProjects = employeeUserProjectRepository
+                .All()
+                .Where(eup => eup.ProjectId == projectId)
+                .ToList();
 
-            employeeUserProjectRepository.SaveChanges();
-            repository.SaveChanges();
+            model.Employees.Where(e => e.IsSelected)
+                .ToList()
+                .ForEach(e =>
+              {
+                  var employeeUserProject = new EmployeeUserProject()
+                  {
+                      EmployeeUserId = e.Id,
+                      ProjectId = projectId
+                  };
+
+                  listEup.Add(employeeUserProject);
+              });
+
+            employeeUserProjects = listEup;
+            result.EmployeeUserProjects = employeeUserProjects;
+            repository.Save(result);
         }
 
         public IEnumerable<ProjectViewModel> GetUserProjects()

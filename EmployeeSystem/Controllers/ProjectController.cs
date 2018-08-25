@@ -30,6 +30,15 @@ namespace EmployeeSystem.Controllers
 
         [HttpGet]
         [Authorize(Roles = "administrator")]
+        public IActionResult Edit(ProjectViewModel model)
+        {
+            var result = service.GetEmployees();
+            model.Employees = result.Employees;
+            return View("Add", model);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "administrator")]
         public IActionResult Add()
         {
             var result = service.GetEmployees();
@@ -38,13 +47,16 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize(Roles = "administrator")]
-        public IActionResult Add(ProjectViewModel model)
+        public IActionResult Save(ProjectViewModel model)
         {
+            ModelState.Remove("Id");
+            ModelState.Remove("StartDate");
+            ModelState.Remove("EndDate");
             if (ModelState.IsValid)
             {
                 try
                 {
-                    service.Add(model);
+                    service.Save(model);
                 }
                 catch (Exception e)
                 {
