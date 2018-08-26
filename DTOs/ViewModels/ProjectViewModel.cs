@@ -15,7 +15,6 @@ namespace DTOs.ViewModels
 
         [DataType(DataType.Date)]
         [Display(Name = "Start Date")]
-        //[DisplayFormat(DataFormatString = "{dd-yyyy-mm}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]

@@ -12,6 +12,8 @@
             <tr>
                 <th>Name</th>
                 <th>Employees</th>
+                <th>Start Date</th>
+                <th>End Date</th>
                 @if (User.IsInRole("administrator"))
                 {
                     <th></th>
@@ -29,6 +31,8 @@
                             <br />
                         }
                     </td>
+                    <td>@Html.DisplayFor(modelItem => project.StartDate)</td>
+                    <td>@Html.DisplayFor(modelItem => project.EndDate)</td>
                     @if (User.IsInRole("administrator"))
                     {
                         <td class="col-md-1">

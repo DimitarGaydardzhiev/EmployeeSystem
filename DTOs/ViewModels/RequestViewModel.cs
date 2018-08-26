@@ -8,11 +8,13 @@ namespace DTOs.ViewModels
     {
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DateCompare]
         public DateTime From { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DateCompare]
         public DateTime To { get; set; }
 

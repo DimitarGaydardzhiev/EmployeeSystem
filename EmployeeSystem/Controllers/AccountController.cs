@@ -1,21 +1,25 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Enums;
+using DTOs.ViewModels;
 using EmployeeSystem.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NToastNotify;
 using ServiceLayer.Interfaces;
+using ServiceLayer.Utils;
 using System.Threading.Tasks;
 
 namespace EmployeeSystem.Controllers
 {
     [Authorize]
     [Route("[controller]/[action]")]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly IAccountService service;
 
-        public AccountController(IAccountService service)
+        public AccountController(IAccountService service, IToastNotification toastNotification)
+            : base(toastNotification)
         {
             this.service = service;
         }
@@ -76,12 +80,14 @@ namespace EmployeeSystem.Controllers
                 var result = await service.Register(model);
                 if (result.Succeeded)
                 {
+                    ShowNotification(SuccessMessages.SuccessAdd, ToastrSeverity.Success);
                     return RedirectToAction("All", "Employee");
                 }
 
+                ShowNotification("Invalid Data", ToastrSeverity.Error);
                 AddErrors(result);
             }
-            
+
             return RedirectToAction("Add", "Employee", ModelState);
         }
 
