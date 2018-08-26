@@ -36,12 +36,13 @@ namespace ServiceLayer.Services
         {
             var userId = repository.UserId;
 
-            var request = repository
+            var requestExists = repository
                 .All()
-                .FirstOrDefault(r => r.EmployeeUserId == userId &&
-                                    (r.From >= model.From && model.From <= model.To));
+                .Any(r => r.EmployeeUserId == userId &&
+                                    ((r.From <= model.From && model.From <= r.To) ||
+                                    (r.From <= model.To && model.To <= r.To)));
 
-            if (request != null)
+            if (requestExists)
                 throw new Exception(ErrorMessages.ThereIsAlreadyRequestForTheseDatesMessage);
 
             var result = repository.FindOrCreate(model.Id);

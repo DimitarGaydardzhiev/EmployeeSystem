@@ -22,7 +22,10 @@ namespace DTOs.AutoMapper
                 .ForMember(p => p.Name, cfg => cfg.MapFrom(c => c.Name));
 
             CreateMap<EmployeeUser, EmployeeViewModel>()
-                .ForMember(e => e.Department, cfg => cfg.MapFrom(e => e.Department.Name));
+                .ForMember(e => e.Department, cfg => cfg.MapFrom(e => e.Department.Name))
+                .ForMember(e => e.StartingDate, cfg => cfg.MapFrom(e => e.InCompanyFrom))
+                .ForMember(e => e.PositionId, cfg => cfg.MapFrom(e => e.EmployeePositionId))
+                .ForMember(e => e.Position, cfg => cfg.MapFrom(e => e.EmployeePosition.Name));
 
             CreateMap<Request, RequestViewModel>()
                 .ForMember(r => r.User, cfg => cfg.MapFrom(r => $"{r.EmployeeUser.FirstName} {r.EmployeeUser.LastName}"))

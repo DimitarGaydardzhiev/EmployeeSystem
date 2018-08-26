@@ -83,7 +83,9 @@ namespace ServiceLayer.Services
 
         private IEnumerable<EmployeeViewModel> GetEmployees(bool isActive)
         {
-            var employees = repository.All().Include(e => e.Department)
+            var employees = repository.All()
+                .Include(e => e.Department)
+                .Include(e => e.EmployeePosition)
                 .Where(e => e.IsActive == isActive)
                 .ToList();
 
