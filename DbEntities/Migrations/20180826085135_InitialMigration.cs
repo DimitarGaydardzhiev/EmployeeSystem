@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+using System.IO;
 
 namespace DbEntities.Migrations
 {
@@ -67,7 +67,7 @@ namespace DbEntities.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,8 +81,11 @@ namespace DbEntities.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
+                    ProjectStatusId = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false)
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -100,19 +103,6 @@ namespace DbEntities.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RequestTypes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Skills",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Skills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -228,15 +218,17 @@ namespace DbEntities.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsActive = table.Column<bool>(nullable: false),
-                    Birthday = table.Column<DateTime>(nullable: false),
-                    InCompanyFrom = table.Column<DateTime>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: true),
+                    InCompanyFrom = table.Column<DateTime>(nullable: true),
                     InCompanyTo = table.Column<DateTime>(nullable: true),
                     Age = table.Column<int>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
                     PersonalDescription = table.Column<string>(nullable: true),
                     AspUserId = table.Column<string>(nullable: true),
                     DepartmentId = table.Column<int>(nullable: true),
-                    SkillId = table.Column<int>(nullable: true),
-                    EmployeePositionId = table.Column<int>(nullable: true)
+                    EmployeePositionId = table.Column<int>(nullable: true),
+                    ManagerId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -260,9 +252,9 @@ namespace DbEntities.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EmployeeUsers_Skills_SkillId",
-                        column: x => x.SkillId,
-                        principalTable: "Skills",
+                        name: "FK_EmployeeUsers_EmployeeUsers_ManagerId",
+                        column: x => x.ManagerId,
+                        principalTable: "EmployeeUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -301,6 +293,8 @@ namespace DbEntities.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     From = table.Column<DateTime>(nullable: false),
                     To = table.Column<DateTime>(nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    IsApproved = table.Column<bool>(nullable: false),
                     RequestTypeId = table.Column<int>(nullable: false),
                     EmployeeUserId = table.Column<int>(nullable: false)
                 },
@@ -388,9 +382,9 @@ namespace DbEntities.Migrations
                 column: "EmployeePositionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmployeeUsers_SkillId",
+                name: "IX_EmployeeUsers_ManagerId",
                 table: "EmployeeUsers",
-                column: "SkillId");
+                column: "ManagerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Request_EmployeeUserId",
@@ -475,9 +469,6 @@ namespace DbEntities.Migrations
 
             migrationBuilder.DropTable(
                 name: "EmployeePositions");
-
-            migrationBuilder.DropTable(
-                name: "Skills");
         }
     }
 }

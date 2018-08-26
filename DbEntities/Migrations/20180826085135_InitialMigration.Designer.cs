@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DbEntities.Migrations
 {
     [DbContext(typeof(EmployeeSystemContext))]
-    [Migration("20180816190803_ProjectStatus")]
-    partial class ProjectStatus
+    [Migration("20180826085135_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,7 +58,7 @@ namespace DbEntities.Migrations
 
                     b.Property<string>("AspUserId");
 
-                    b.Property<DateTime>("Birthday");
+                    b.Property<DateTime?>("Birthday");
 
                     b.Property<int?>("DepartmentId");
 
@@ -66,7 +66,7 @@ namespace DbEntities.Migrations
 
                     b.Property<string>("FirstName");
 
-                    b.Property<DateTime>("InCompanyFrom");
+                    b.Property<DateTime?>("InCompanyFrom");
 
                     b.Property<DateTime?>("InCompanyTo");
 
@@ -77,8 +77,6 @@ namespace DbEntities.Migrations
                     b.Property<int?>("ManagerId");
 
                     b.Property<string>("PersonalDescription");
-
-                    b.Property<int?>("SkillId");
 
                     b.HasKey("Id");
 
@@ -91,8 +89,6 @@ namespace DbEntities.Migrations
                     b.HasIndex("EmployeePositionId");
 
                     b.HasIndex("ManagerId");
-
-                    b.HasIndex("SkillId");
 
                     b.ToTable("EmployeeUsers");
                 });
@@ -121,6 +117,9 @@ namespace DbEntities.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
                     b.Property<DateTime>("EndDate");
 
@@ -176,19 +175,6 @@ namespace DbEntities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("RequestTypes");
-                });
-
-            modelBuilder.Entity("DbEntities.Models.Skill", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("EmployeeSystem.Models.AspUser", b =>
@@ -363,16 +349,12 @@ namespace DbEntities.Migrations
                         .HasForeignKey("DepartmentId");
 
                     b.HasOne("DbEntities.Models.EmployeePosition", "EmployeePosition")
-                        .WithMany()
+                        .WithMany("Employees")
                         .HasForeignKey("EmployeePositionId");
 
                     b.HasOne("DbEntities.Models.EmployeeUser", "Manager")
                         .WithMany()
                         .HasForeignKey("ManagerId");
-
-                    b.HasOne("DbEntities.Models.Skill", "Skill")
-                        .WithMany()
-                        .HasForeignKey("SkillId");
                 });
 
             modelBuilder.Entity("DbEntities.Models.EmployeeUserProject", b =>

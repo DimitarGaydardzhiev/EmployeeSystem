@@ -26,7 +26,7 @@ namespace DataLayer
         public int GetUserId()
         {
             int number = 0;
-            var aspUserId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var aspUserId = context.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (aspUserId != null)
             {

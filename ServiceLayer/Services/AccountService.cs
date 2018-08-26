@@ -1,9 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.ViewModels;
 using EmployeeSystem.Models;
 using EmployeeSystem.Models.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
 
 namespace ServiceLayer.Services
@@ -12,17 +17,27 @@ namespace ServiceLayer.Services
     {
         private readonly UserManager<AspUser> userManager;
         private readonly SignInManager<AspUser> signInManager;
+        private readonly IRepository<EmployeeUser> employeeUserRepository;
 
         public AccountService(
             UserManager<AspUser> userManager,
-            SignInManager<AspUser> signInManager)
+            SignInManager<AspUser> signInManager,
+            IRepository<EmployeeUser> employeeUserRepository)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.employeeUserRepository = employeeUserRepository;
         }
 
         public async Task<SignInResult> Login(LoginViewModel model)
         {
+            var user = employeeUserRepository.All()
+                .Include(u => u.AspUser)
+                .FirstOrDefault(u => u.AspUser.Email == model.Email);
+
+            if (user != null && !user.IsActive)
+                return SignInResult.Failed;
+
             return await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
         }
 
