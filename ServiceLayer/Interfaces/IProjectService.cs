@@ -1,17 +1,17 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IProjectService
     {
-        IEnumerable<ProjectViewModel> GetCompanyProjects();
+        IEnumerable<ProjectDto> GetCompanyProjects();
 
-        ProjectViewModel GetEmployees();
+        ProjectDto GetEmployees();
 
-        void Save(ProjectViewModel model);
+        void Save(ProjectDto model);
 
-        IEnumerable<ProjectViewModel> GetUserProjects();
+        IEnumerable<ProjectDto> GetUserProjects();
 
         void Delete(int id);
     }

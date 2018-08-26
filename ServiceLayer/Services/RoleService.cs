@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.AspNetCore.Identity;
 using ServiceLayer.Interfaces;
 using System.Collections.Generic;
@@ -18,7 +18,7 @@ namespace ServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<RoleViewModel> All()
+        public IEnumerable<RoleDto> All()
         {
             //var result = roleManager.Roles.Select(r => new RoleViewModel()
             //{
@@ -31,7 +31,7 @@ namespace ServiceLayer.Services
                 .OrderByDescending(r => r.Id)
                 .ToList();
 
-            return mapper.Map<List<IdentityRole>, List<RoleViewModel>>(roles);
+            return mapper.Map<List<IdentityRole>, List<RoleDto>>(roles);
         }
     }
 }

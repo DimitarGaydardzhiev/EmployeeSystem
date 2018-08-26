@@ -1,5 +1,5 @@
 ﻿using DTOs.Enums;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -72,7 +72,7 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize(Roles = "administrator")]
-        public async Task<IActionResult> Register(EmployeeViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Register(EmployeeDto model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)

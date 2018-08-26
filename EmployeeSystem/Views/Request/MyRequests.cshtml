@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RequestViewModel>
+﻿@model IEnumerable<RequestDto>
 
 @{
     ViewData["Title"] = "My Requests";
@@ -38,7 +38,7 @@
                         <td class="col-md-1">
                             @Html.ActionLink("Edit", "Edit", request, new { @class = "btn btn-warning" })
                         </td>
-                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteModelDto()
                                {
                                    Id = request.Id,
                                    ControllerName = "Request",

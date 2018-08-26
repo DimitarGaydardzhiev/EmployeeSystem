@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
@@ -26,13 +26,13 @@ namespace ServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<BaseViewModel> GetRequestTypes()
+        public IEnumerable<BaseDto> GetRequestTypes()
         {
             var result = requestTypeService.All();
             return result;
         }
 
-        public void Save(RequestViewModel model)
+        public void Save(RequestDto model)
         {
             var userId = repository.UserId;
 
@@ -60,7 +60,7 @@ namespace ServiceLayer.Services
             repository.Save(result);
         }
 
-        public IEnumerable<RequestViewModel> GetMyRequests()
+        public IEnumerable<RequestDto> GetMyRequests()
         {
             var requests = repository.All()
                 .Include(r => r.EmployeeUser)
@@ -68,16 +68,16 @@ namespace ServiceLayer.Services
                 .Where(r => r.EmployeeUserId == repository.UserId)
                 .ToList();
 
-            return mapper.Map<List<Request>, List<RequestViewModel>>(requests);
+            return mapper.Map<List<Request>, List<RequestDto>>(requests);
         }
 
-        public IEnumerable<RequestViewModel> GetPendingRequests()
+        public IEnumerable<RequestDto> GetPendingRequests()
         {
             var result = GetRequests(false);
             return result;
         }
 
-        public IEnumerable<RequestViewModel> GetApprovedRequests()
+        public IEnumerable<RequestDto> GetApprovedRequests()
         {
             var result = GetRequests(true);
             return result;
@@ -93,7 +93,7 @@ namespace ServiceLayer.Services
             ManageRequest(requestId, false);
         }
 
-        private IEnumerable<RequestViewModel> GetRequests(bool isApproved)
+        private IEnumerable<RequestDto> GetRequests(bool isApproved)
         {
             var requests = repository.All()
                 .Include(r => r.EmployeeUser)
@@ -101,7 +101,7 @@ namespace ServiceLayer.Services
                 .Where(r => r.IsApproved == isApproved)
                 .ToList();
 
-            return mapper.Map<List<Request>, List<RequestViewModel>>(requests);
+            return mapper.Map<List<Request>, List<RequestDto>>(requests);
         }
 
         private void ManageRequest(int requestId, bool status)

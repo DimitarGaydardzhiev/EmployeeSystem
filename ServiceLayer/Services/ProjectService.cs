@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
@@ -29,16 +29,16 @@ namespace ServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<ProjectViewModel> GetCompanyProjects()
+        public IEnumerable<ProjectDto> GetCompanyProjects()
         {
             var result = repository.All()
                  .Include(p => p.EmployeeUserProjects)
                  .ThenInclude(p => p.EmployeeUser)
-                 .Select(p => new ProjectViewModel()
+                 .Select(p => new ProjectDto()
                  {
                      Employees = p.EmployeeUserProjects
                      .Where(eup => eup.EmployeeUser.IsActive)
-                     .Select(eup => new MultiSelectViewModel()
+                     .Select(eup => new MultiSelectDto()
                      {
                          Id = eup.EmployeeUserId,
                          Name = $"{eup.EmployeeUser.FirstName} {eup.EmployeeUser.LastName}"
@@ -54,11 +54,11 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        public ProjectViewModel GetEmployees()
+        public ProjectDto GetEmployees()
         {
-            var result = new ProjectViewModel()
+            var result = new ProjectDto()
             {
-                Employees = employeeService.All().Select(r => new MultiSelectViewModel()
+                Employees = employeeService.All().Select(r => new MultiSelectDto()
                 {
                     Id = r.Id,
                     Name = $"{r.FirstName} {r.LastName}"
@@ -68,7 +68,7 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        public void Save(ProjectViewModel model)
+        public void Save(ProjectDto model)
         {
             var project = repository.All()
                 .FirstOrDefault(p => p.Name == model.Name);
@@ -109,7 +109,7 @@ namespace ServiceLayer.Services
             repository.Save(result);
         }
 
-        public IEnumerable<ProjectViewModel> GetUserProjects()
+        public IEnumerable<ProjectDto> GetUserProjects()
         {
             //var userId = repository.UserId;
 
@@ -131,7 +131,7 @@ namespace ServiceLayer.Services
                 .Where(p => p.EmployeeUserProjects.Any(eup => eup.EmployeeUserId == userId))
                 .ToList();
 
-            return mapper.Map<List<Project>, List<ProjectViewModel>>(projects);
+            return mapper.Map<List<Project>, List<ProjectDto>>(projects);
         }
     }
 }

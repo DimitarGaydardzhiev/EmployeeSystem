@@ -2,7 +2,7 @@
 using DataLayer.Interfaces;
 using DatLayer;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Data;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +32,7 @@ namespace EmployeeSystem.Tests.Services
             db.AddRange(department);
             db.SaveChanges();
 
-            var exception = Assert.Throws<Exception>(() => departmentService.Save(new DepartmentViewModel()
+            var exception = Assert.Throws<Exception>(() => departmentService.Save(new DepartmentDto()
             {
                 Name = "Test"
             }));

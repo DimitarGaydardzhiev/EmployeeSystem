@@ -1,5 +1,5 @@
 ﻿using DTOs.Enums;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -30,7 +30,7 @@ namespace EmployeeSystem.Controllers
 
         [HttpGet]
         [Authorize(Roles = "administrator")]
-        public IActionResult Edit(ProjectViewModel model)
+        public IActionResult Edit(ProjectDto model)
         {
             var result = service.GetEmployees();
             model.Employees = result.Employees;
@@ -47,7 +47,7 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize(Roles = "administrator")]
-        public IActionResult Save(ProjectViewModel model)
+        public IActionResult Save(ProjectDto model)
         {
             ModelState.Remove("Id");
             ModelState.Remove("StartDate");

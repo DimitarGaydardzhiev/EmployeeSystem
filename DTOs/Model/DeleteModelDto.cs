@@ -1,6 +1,6 @@
-﻿namespace DTOs.ViewModels
+﻿namespace DTOs.Models
 {
-    public class DeleteViewmModel
+    public class DeleteModelDto
     {
         public int Id { get; set; }
 

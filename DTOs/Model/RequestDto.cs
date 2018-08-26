@@ -2,9 +2,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTOs.ViewModels
+namespace DTOs.Models
 {
-    public class RequestViewModel : BaseViewModel
+    public class RequestDto : BaseDto
     {
         [Required]
         [DataType(DataType.Date)]

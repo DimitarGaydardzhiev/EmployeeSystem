@@ -1,6 +1,6 @@
-﻿namespace DTOs.ViewModels
+﻿namespace DTOs.Models
 {
-    public class BaseViewModel
+    public class BaseDto
     {
         public int Id { get; set; }
 

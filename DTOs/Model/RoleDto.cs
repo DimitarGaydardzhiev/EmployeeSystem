@@ -1,6 +1,6 @@
-﻿namespace DTOs.ViewModels
+﻿namespace DTOs.Models
 {
-    public class RoleViewModel
+    public class RoleDto
     {
         public string Id { get; set; }
 

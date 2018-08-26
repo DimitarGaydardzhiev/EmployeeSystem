@@ -1,5 +1,5 @@
 ﻿using DTOs.Enums;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -37,14 +37,14 @@ namespace EmployeeSystem.Controllers
 
         [HttpGet]
         [Authorize(Roles = "administrator")]
-        public IActionResult Edit(PositionViewModel model)
+        public IActionResult Edit(PositionDto model)
         {
             return View("Add", model);
         }
 
         [HttpPost]
         [Authorize(Roles = "administrator")]
-        public IActionResult Save(PositionViewModel model)
+        public IActionResult Save(PositionDto model)
         {
             ModelState.Remove("Id");
             if (ModelState.IsValid)

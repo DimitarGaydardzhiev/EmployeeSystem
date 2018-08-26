@@ -3,7 +3,7 @@ using DataLayer;
 using DataLayer.Interfaces;
 using DatLayer;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Data;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;

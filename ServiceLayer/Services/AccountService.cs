@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Models;
 using EmployeeSystem.Models.AccountViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -41,7 +41,7 @@ namespace ServiceLayer.Services
             return await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
         }
 
-        public async Task<IdentityResult> Register(EmployeeViewModel model)
+        public async Task<IdentityResult> Register(EmployeeDto model)
         {
             var user = new AspUser { UserName = model.Email, Email = model.Email };
             var result = await userManager.CreateAsync(user, model.Password);

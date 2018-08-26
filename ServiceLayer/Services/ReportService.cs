@@ -1,7 +1,7 @@
 ﻿using DatLayer.Interfaces;
 using DbEntities.Models;
 using DTOs.Enums;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Areas.AdminControlls.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -30,10 +30,10 @@ namespace ServiceLayer.Services
             this.employeeUserProjectRepository = employeeUserProjectRepository;
         }
 
-        public ChartViewModel GetReport(int reportTypeId)
+        public ChartDto GetReport(int reportTypeId)
         {
-            var result = new ChartViewModel();
-            var data = new List<DataPoint>();
+            var result = new ChartDto();
+            var data = new List<DataPointDto>();
 
             switch (reportTypeId)
             {
@@ -57,13 +57,13 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        private List<DataPoint> GetEmployeesByPosition()
+        private List<DataPointDto> GetEmployeesByPosition()
         {
             var result = employeeRepository.All()
                 .Include(e => e.EmployeePosition)
                 .Where(e => e.IsActive)
                 .GroupBy(e => e.EmployeePosition.Name)
-                .Select(e => new DataPoint()
+                .Select(e => new DataPointDto()
                 {
                     Label = e.Key ?? "Not defined",
                     Y = e.Count()
@@ -73,13 +73,13 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        private List<DataPoint> GetProjectAssignedEmployees()
+        private List<DataPointDto> GetProjectAssignedEmployees()
         {
             var result = employeeUserProjectRepository.All()
                 .Include(e => e.Project)
                 .Include(e => e.EmployeeUser)
                 .GroupBy(p => p.Project.Name)
-                .Select(e => new DataPoint()
+                .Select(e => new DataPointDto()
                 {
                     Label = e.Key,
                     Y = e.Select(eup => eup.EmployeeUser).Where(u => u.IsActive).Count()

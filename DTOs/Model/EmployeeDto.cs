@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTOs.ViewModels
+namespace DTOs.Models
 {
-    public class EmployeeViewModel : BaseViewModel
+    public class EmployeeDto : BaseDto
     {
         [Required]
         [Display(Name = "First Name")]

@@ -4,7 +4,7 @@ using System.Linq;
 using AutoMapper;
 using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
@@ -26,16 +26,16 @@ namespace ServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<DepartmentViewModel> All()
+        public IEnumerable<DepartmentDto> All()
         {
             var departments = repository.All().Include(d => d.Employees).ToList();
 
-            var result = mapper.Map<List<Department>, List<DepartmentViewModel>>(departments);
+            var result = mapper.Map<List<Department>, List<DepartmentDto>>(departments);
 
             return result;
         }
 
-        public void Save(DepartmentViewModel model)
+        public void Save(DepartmentDto model)
         {
             var department = repository.All()
                 .FirstOrDefault(d => d.Name == model.Name);

@@ -1,6 +1,6 @@
-﻿namespace DTOs.ViewModels
+﻿namespace DTOs.Models
 {
-    public class CurrentMonthViewModel
+    public class CurrentMonthDto
     {
         public string Month { get; set; }
 

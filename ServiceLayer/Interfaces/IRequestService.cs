@@ -1,19 +1,19 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IRequestService
     {
-        IEnumerable<BaseViewModel> GetRequestTypes();
+        IEnumerable<BaseDto> GetRequestTypes();
 
-        IEnumerable<RequestViewModel> GetMyRequests();
+        IEnumerable<RequestDto> GetMyRequests();
 
-        IEnumerable<RequestViewModel> GetPendingRequests();
+        IEnumerable<RequestDto> GetPendingRequests();
 
-        IEnumerable<RequestViewModel> GetApprovedRequests();
+        IEnumerable<RequestDto> GetApprovedRequests();
 
-        void Save(RequestViewModel model);
+        void Save(RequestDto model);
 
         void ApproveRequest(int requestId);
 

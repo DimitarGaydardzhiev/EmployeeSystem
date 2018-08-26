@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeeViewModel>
+﻿@model IEnumerable<EmployeeDto>
 
 @{
     ViewData["Title"] = "Employees";
@@ -42,7 +42,7 @@
                         <td>@Html.DisplayFor(modelItem => employee.Description)</td>
                         @if (areCurrent && User.IsInRole("administrator"))
                         {
-                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteModelDto()
                                {
                                    Id = employee.Id,
                                    ControllerName = "Employee",

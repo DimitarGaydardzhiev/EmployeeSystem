@@ -2,7 +2,7 @@ using System;
 
 namespace EmployeeSystem.Models
 {
-    public class ErrorViewModel
+    public class ErrorModelDto
     {
         public string RequestId { get; set; }
 

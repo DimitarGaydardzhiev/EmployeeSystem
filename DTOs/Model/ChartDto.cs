@@ -1,6 +1,6 @@
-﻿namespace DTOs.ViewModels
+﻿namespace DTOs.Models
 {
-    public class ChartViewModel
+    public class ChartDto
     {
         public string ChartTitle { get; set; }
 

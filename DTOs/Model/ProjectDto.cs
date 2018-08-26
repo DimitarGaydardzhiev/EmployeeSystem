@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace DTOs.ViewModels
+namespace DTOs.Models
 {
-    public class ProjectViewModel : BaseViewModel
+    public class ProjectDto : BaseDto
     {
         [Required]
         public override string Name { get; set; }
 
-        public List<MultiSelectViewModel> Employees { get; set; }
+        public List<MultiSelectDto> Employees { get; set; }
 
         public string Status { get; set; }
 

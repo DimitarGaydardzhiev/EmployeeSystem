@@ -22,7 +22,7 @@ namespace EmployeeSystem.Controllers
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorModelDto { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

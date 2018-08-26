@@ -1,4 +1,4 @@
-﻿@model IEnumerable<PositionViewModel>
+﻿@model IEnumerable<PositionDto>
 
 @{
     ViewData["Title"] = "Company Positions";
@@ -30,7 +30,7 @@
                             <td class="col-md-1">
                                 @Html.ActionLink("Edit", "Edit", position, new { @class = "btn btn-warning" })
                             </td>
-                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteModelDto()
                            {
                                Id = position.Id,
                                ControllerName = "Position",
@@ -45,7 +45,7 @@
                             <td class="col-md-1">
                                 <a asp-area="" class="btn btn-warning disabled" role="button">Edit</a>
                             </td>
-                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                            @await Html.PartialAsync("_DeleteActionPartial", new DeleteModelDto()
                            {
                                Id = position.Id,
                                ControllerName = "Position",

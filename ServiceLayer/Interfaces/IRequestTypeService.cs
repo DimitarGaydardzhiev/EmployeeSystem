@@ -1,10 +1,10 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IRequestTypeService
     {
-        IEnumerable<BaseViewModel> All();
+        IEnumerable<BaseDto> All();
     }
 }

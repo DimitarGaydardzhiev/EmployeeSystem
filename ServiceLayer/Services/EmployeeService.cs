@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,41 +38,41 @@ namespace ServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<EmployeeViewModel> All()
+        public IEnumerable<EmployeeDto> All()
         {
             var result = GetEmployees(isActive: true);
             return result;
         }
 
-        public IEnumerable<EmployeeViewModel> GetFormerEmployees()
+        public IEnumerable<EmployeeDto> GetFormerEmployees()
         {
             var result = GetEmployees(isActive: false);
             return result;
         }
 
-        public IEnumerable<RoleViewModel> GetRoles()
+        public IEnumerable<RoleDto> GetRoles()
         {
             var result = roleService.All();
             return result;
         }
 
-        public IEnumerable<BaseViewModel> GetPositions()
+        public IEnumerable<BaseDto> GetPositions()
         {
             var positions = positionService.All();
             return positions;
         }
 
-        public IEnumerable<BaseViewModel> GetDepartments()
+        public IEnumerable<BaseDto> GetDepartments()
         {
             var departments = departmentService.All();
             return departments;
         }
 
-        public IEnumerable<BaseViewModel> GetManagers()
+        public IEnumerable<BaseDto> GetManagers()
         {
             var result = repository.All()
                  .Where(e => e.IsActive)
-                 .Select(m => new BaseViewModel()
+                 .Select(m => new BaseDto()
                  {
                      Id = m.Id,
                      Name = $"{m.FirstName} {m.LastName}"
@@ -81,7 +81,7 @@ namespace ServiceLayer.Services
             return result;
         }
 
-        private IEnumerable<EmployeeViewModel> GetEmployees(bool isActive)
+        private IEnumerable<EmployeeDto> GetEmployees(bool isActive)
         {
             var employees = repository.All()
                 .Include(e => e.Department)
@@ -89,7 +89,7 @@ namespace ServiceLayer.Services
                 .Where(e => e.IsActive == isActive)
                 .ToList();
 
-            return mapper.Map<List<EmployeeUser>, List<EmployeeViewModel>>(employees);
+            return mapper.Map<List<EmployeeUser>, List<EmployeeDto>>(employees);
         }
     }
 }

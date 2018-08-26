@@ -2,7 +2,7 @@
 using DataLayer.Interfaces;
 using DatLayer;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using EmployeeSystem.Data;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -116,7 +116,7 @@ namespace EmployeeSystem.Tests.Services
             db.AddRange(firstProject, secondProject);
             db.SaveChanges();
 
-            var exception = Assert.Throws<Exception>(() => projectService.Save(new ProjectViewModel()
+            var exception = Assert.Throws<Exception>(() => projectService.Save(new ProjectDto()
             {
                 Name = "First"
             }));

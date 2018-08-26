@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectViewModel>
+﻿@model IEnumerable<ProjectDto>
 
 @{
     ViewData["Title"] = "Company Projects";
@@ -38,7 +38,7 @@
                         <td class="col-md-1">
                             @Html.ActionLink("Edit", "Edit", project, new { @class = "btn btn-warning" })
                         </td>
-                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteViewmModel()
+                        @await Html.PartialAsync("_DeleteActionPartial", new DeleteModelDto()
                          {
                              Id = project.Id,
                              ControllerName = "Project",

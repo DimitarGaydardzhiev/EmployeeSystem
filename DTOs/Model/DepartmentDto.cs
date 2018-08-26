@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DTOs.ViewModels
+namespace DTOs.Models
 {
-    public class PositionViewModel : BaseViewModel
+    public class DepartmentDto : BaseDto
     {
         [Required]
         public override string Name { get; set; }

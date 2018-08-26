@@ -1,9 +1,9 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 
 namespace ServiceLayer.Interfaces
 {
     public interface ICalendarService
     {
-        CurrentMonthViewModel GetCurrentMonthData();
+        CurrentMonthDto GetCurrentMonthData();
     }
 }

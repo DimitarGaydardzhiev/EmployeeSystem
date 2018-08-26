@@ -1,4 +1,4 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Interfaces;
 
@@ -17,7 +17,7 @@ namespace EmployeeSystem.Controllers
 
         public IActionResult Index()
         {
-            CurrentMonthViewModel currentMonthData = service.GetCurrentMonthData();
+            CurrentMonthDto currentMonthData = service.GetCurrentMonthData();
             ViewBag.Months = Months;
             return View(currentMonthData);
         }

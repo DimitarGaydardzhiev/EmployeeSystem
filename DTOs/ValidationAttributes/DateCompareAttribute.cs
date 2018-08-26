@@ -1,4 +1,4 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace DTOs.ValidationAttributes
@@ -7,7 +7,7 @@ namespace DTOs.ValidationAttributes
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var model = (RequestViewModel)validationContext.ObjectInstance;
+            var model = (RequestDto)validationContext.ObjectInstance;
             if (model.From > model.To)
             {
                 return new ValidationResult("FROM date should be before TO date");

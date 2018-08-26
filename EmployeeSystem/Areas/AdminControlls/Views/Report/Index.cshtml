@@ -1,4 +1,4 @@
-﻿@model ChartViewModel
+﻿@model ChartDto
 
 @{
     ViewData["Title"] = "Reports";
@@ -7,10 +7,10 @@
 <h2>@ViewData["Title"]</h2>
 
 @{
-    var reportsType = new List<BaseViewModel>()
+    var reportsType = new List<BaseDto>()
 {
-new BaseViewModel(){Id = 1, Name = "Employees by position"},
-new BaseViewModel(){Id = 2, Name = "Project Assigned Employees"}
+new BaseDto(){Id = 1, Name = "Employees by position"},
+new BaseDto(){Id = 2, Name = "Project Assigned Employees"}
 };
 }
 <div class="container">

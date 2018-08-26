@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DatLayer.Interfaces;
 using DbEntities.Models;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.EntityFrameworkCore;
 using ServiceLayer.ErrorUtils;
 using ServiceLayer.Interfaces;
@@ -26,16 +26,16 @@ namespace ServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public IEnumerable<PositionViewModel> All()
+        public IEnumerable<PositionDto> All()
         {
             var positions = repository.All().Include(d => d.Employees).ToList();
 
-            var result = mapper.Map<List<EmployeePosition>, List<PositionViewModel>>(positions);
+            var result = mapper.Map<List<EmployeePosition>, List<PositionDto>>(positions);
 
             return result;
         }
 
-        public void Save(PositionViewModel model)
+        public void Save(PositionDto model)
         {
             var position = repository.All().FirstOrDefault(p => p.Name == model.Name);
 

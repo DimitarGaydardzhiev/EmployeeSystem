@@ -1,5 +1,5 @@
 ﻿using DTOs.Enums;
-using DTOs.ViewModels;
+using DTOs.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NToastNotify;
@@ -23,7 +23,7 @@ namespace EmployeeSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(RequestViewModel model)
+        public IActionResult Edit(RequestDto model)
         {
             ViewBag.RequestTypes = service.GetRequestTypes();
             bool canEdit = service.CanEdit(model.Id);
@@ -46,7 +46,7 @@ namespace EmployeeSystem.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Save(RequestViewModel model)
+        public IActionResult Save(RequestDto model)
         {
             ModelState.Remove("Id");
             ViewBag.RequestTypes = service.GetRequestTypes();

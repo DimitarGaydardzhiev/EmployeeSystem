@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace EmployeeSystem.Areas.AdminControlls.Models
 {
     [DataContract]
-    public class DataPoint
+    public class DataPointDto
     {
         //public DataPoint(string label, double y)
         //{

@@ -1,13 +1,13 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IDepartmentService
     {
-        IEnumerable<DepartmentViewModel> All();
+        IEnumerable<DepartmentDto> All();
 
-        void Save(DepartmentViewModel model);
+        void Save(DepartmentDto model);
 
         void Delete(int departmentId);
     }

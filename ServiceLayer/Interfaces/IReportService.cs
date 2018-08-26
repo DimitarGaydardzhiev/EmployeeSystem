@@ -1,9 +1,9 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IReportService
     {
-        ChartViewModel GetReport(int id);
+        ChartDto GetReport(int id);
     }
 }

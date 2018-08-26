@@ -1,4 +1,4 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using ServiceLayer.Interfaces;
 using System;
 
@@ -8,10 +8,10 @@ namespace ServiceLayer.Services
     {
         private readonly string[] Days = new string[7] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
 
-        public CurrentMonthViewModel GetCurrentMonthData()
+        public CurrentMonthDto GetCurrentMonthData()
         {
             var days = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-            var result = new CurrentMonthViewModel()
+            var result = new CurrentMonthDto()
             {
                 Month = DateTime.Now.ToString("MMMM"),
                 Days = days,

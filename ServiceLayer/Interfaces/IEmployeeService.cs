@@ -1,21 +1,21 @@
-﻿using DTOs.ViewModels;
+﻿using DTOs.Models;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Interfaces
 {
     public interface IEmployeeService
     {
-        IEnumerable<EmployeeViewModel> All();
+        IEnumerable<EmployeeDto> All();
 
-        IEnumerable<RoleViewModel> GetRoles();
+        IEnumerable<RoleDto> GetRoles();
 
-        IEnumerable<BaseViewModel> GetPositions();
+        IEnumerable<BaseDto> GetPositions();
 
-        IEnumerable<BaseViewModel> GetDepartments();
+        IEnumerable<BaseDto> GetDepartments();
 
-        IEnumerable<BaseViewModel> GetManagers();
+        IEnumerable<BaseDto> GetManagers();
 
-        IEnumerable<EmployeeViewModel> GetFormerEmployees();
+        IEnumerable<EmployeeDto> GetFormerEmployees();
 
         void Delete(int employeeId);
     }
